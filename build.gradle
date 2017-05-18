@@ -12,3 +12,38 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+task run(type: JavaExec) {
+    workingDir "src/main/resources"
+    main = "de.frogger.Main"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+jar {
+    outputs.upToDateWhen { false }
+    println "Deleting old build..."
+    delete 'frogger_build'
+
+    println "Building..."
+
+    manifest {
+        attributes "Main-Class": "de.frogger.Main"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    doLast {
+        println "Copying..."
+        copy {
+            from 'src/main/resources'
+            into 'frogger_build'
+        }
+        copy {
+            from 'build/libs'
+            into 'frogger_build'
+        }
+        println "Build ready!"
+    }
+}
