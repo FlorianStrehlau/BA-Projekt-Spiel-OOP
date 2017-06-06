@@ -9,10 +9,10 @@ import java.awt.*;
 
 public class Game extends JFrame {
     //define sizes of background components
-    private int highway_length = 800;
-    private int street_width = 150;
+    private int highway_width = 800;
+    private int street_height = 100;
     private int street_count = 4;
-    private int highway_width = street_width*street_count;
+    private int highway_height = street_height*street_count;
     private Image frog;
 
 
@@ -33,4 +33,19 @@ public class Game extends JFrame {
         frog = getImage ("frog/frogger.jpg");*/
     }
 
+    @Override
+    public void paint(Graphics g) {
+        g.setColor(Color.decode("#5B7E77"));
+        g.fillRect(0,0,highway_width, 600);
+        g.setColor(Color.decode("#A0A08E"));
+        g.fillRect(0,100, highway_width, highway_height+40);
+        g.setColor(Color.decode("#372B2D"));
+        g.fillRect(0, 300, 800, 40);
+        g.setColor(Color.white);
+        for (int i=0; i<9; i++) {
+            g.fillRect(i*100, 200, 50, 10);
+            g.fillRect(i*100, 440, 50, 10);
+        }
+
+    }
 }
