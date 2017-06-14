@@ -28,6 +28,16 @@ public class Game extends JFrame implements KeyListener {
 
     boolean runFlag;
 
+    // Menubar components
+    MenuBar mb= new MenuBar();
+    Menu sounds= new Menu("Sounds");
+    MenuItem musik= new MenuItem("Musik");
+
+    Menu option= new Menu("Option");
+    MenuItem option1 = new MenuItem("Option1");
+    MenuItem option2= new MenuItem("Option2");
+    MenuItem option3= new MenuItem("Option3");
+
     Game(String title) {
         this.setSize(800, 600);
         this.setTitle(title);
@@ -43,6 +53,8 @@ public class Game extends JFrame implements KeyListener {
 
         frog = getImage ("frog/frogger.jpg");*/
 
+        createMenuBar();
+
         new Thread(() -> {
             runFlag = true;
             while (runFlag) {
@@ -56,6 +68,23 @@ public class Game extends JFrame implements KeyListener {
                 }
             }
         }).start();
+    }
+
+    private void createMenuBar(){
+
+        setMenuBar(mb);
+        mb.add(sounds);
+
+        sounds.add(musik);
+
+        mb.add(option);
+        option.add(option1);
+        option1.setActionCommand("210");
+        option.add(option2);
+        option2.setActionCommand("220");
+        option.add(option3);
+        option3.setActionCommand("230");
+
     }
 
     @Override
