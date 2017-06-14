@@ -26,6 +26,8 @@ public class Game extends JFrame implements KeyListener {
     private Image leftCars[] = new Image[2];
     private Image rightCars[] = new Image[2];
 
+    boolean runFlag;
+
     Game(String title) {
         this.setSize(800, 600);
         this.setTitle(title);
@@ -42,7 +44,8 @@ public class Game extends JFrame implements KeyListener {
         frog = getImage ("frog/frogger.jpg");*/
 
         new Thread(() -> {
-            while (true) {
+            runFlag = true;
+            while (runFlag) {
 
                 ///calc
                 SwingUtilities.invokeLater(Game.this::repaint);
@@ -68,19 +71,30 @@ public class Game extends JFrame implements KeyListener {
         g.fillRect(0, 100, highway_width, highway_height + 40);
         g.setColor(Color.decode("#372B2D"));
         g.fillRect(0, 300, 800, 40);
-        g.setColor(Color.decode("#8A9B0F"));
-        g.fillRect(400, xa, 20, 20);
+
         g.setColor(Color.white);
         for (int i = 0; i < 9; i++) {
             g.fillRect(i * 100, 200, 50, 10);
             g.fillRect(i * 100, 440, 50, 10);
         }
-        g.fillRect(x * 100, 480, 50, 40);
-        g.fillRect(x * 150, 240, 50, 40);
-            /*Rectangle r1 = new Rectangle(0, 0, 10, 10);
-            Rectangle r2 = new Rectangle(9, 9, 10, 10);
-            r1.intersects(r2);
-            r1.setLocation(9,9);*/
+
+        Rectangle r_frog = new Rectangle(400, xa, 20, 20);
+        g.setColor(Color.decode("#8A9B0F"));
+        g.fillRect((int) r_frog.getX(), (int) r_frog.getY(), (int) r_frog.getWidth(), (int) r_frog.getHeight());
+
+        Rectangle r1 = new Rectangle(x * 100, 480, 50, 40);
+        Rectangle r2 = new Rectangle(x * 150, 240, 50, 40);
+
+        g.setColor(Color.white);
+        g.fillRect((int) r1.getX(), (int) r1.getY(), (int) r1.getWidth(), (int) r1.getHeight());
+        g.fillRect((int) r2.getX(), (int) r2.getY(), (int) r2.getWidth(), (int) r2.getHeight());
+
+        if ((r1.intersects(r_frog) || r2.intersects(r_frog)) && runFlag) {
+            runFlag = false;
+            gameOver();
+        }
+        //r1.setLocation(9, 9);
+
         x++;
         if (x >= 8) {
             x = 0;
@@ -101,12 +115,12 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("lha");
         if (e.getKeyCode() == KeyEvent.VK_UP)
             xa = xa - 50;
         if (e.getKeyCode() == KeyEvent.VK_DOWN)
             xa = xa + 50;
     }
+
 
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
