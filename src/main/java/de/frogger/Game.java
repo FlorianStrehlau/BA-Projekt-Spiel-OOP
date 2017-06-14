@@ -37,6 +37,7 @@ public class Game extends JFrame implements KeyListener {
     MenuItem option1 = new MenuItem("Option1");
     MenuItem option2= new MenuItem("Option2");
     MenuItem option3= new MenuItem("Option3");
+    MenuItem option4= new MenuItem("Option4");
 
     Game(String title) {
         this.setSize(800, 600);
@@ -84,6 +85,7 @@ public class Game extends JFrame implements KeyListener {
         option2.setActionCommand("220");
         option.add(option3);
         option3.setActionCommand("230");
+        option.add(option4);
 
     }
 
