@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 
 /**
@@ -18,8 +19,12 @@ public class Game extends JFrame implements KeyListener {
     private int street_count = 4;
     private int highway_height = street_height * street_count;
     private Image frog;
-    int x = 0;
-    int x2 = 8;
+    int x = 1;
+    int xa = 560;
+
+
+    ArrayList<Rectangle> al_right = new ArrayList<Rectangle>();
+    ArrayList<Rectangle> al_left = new ArrayList<Rectangle>();
 
 
     //car images - left / right
@@ -29,15 +34,15 @@ public class Game extends JFrame implements KeyListener {
     boolean runFlag;
 
     // Menubar components
-    MenuBar mb= new MenuBar();
-    Menu sounds= new Menu("Sounds");
-    MenuItem musik= new MenuItem("Musik");
+    MenuBar mb = new MenuBar();
+    Menu sounds = new Menu("Sounds");
+    MenuItem musik = new MenuItem("Musik");
 
-    Menu option= new Menu("Option");
+    Menu option = new Menu("Option");
     MenuItem option1 = new MenuItem("Option1");
-    MenuItem option2= new MenuItem("Option2");
-    MenuItem option3= new MenuItem("Option3");
-    MenuItem option4= new MenuItem("Option4");
+    MenuItem option2 = new MenuItem("Option2");
+    MenuItem option3 = new MenuItem("Option3");
+    MenuItem option4 = new MenuItem("Option4");
 
     Game(String title) {
         this.setSize(800, 600);
@@ -56,6 +61,21 @@ public class Game extends JFrame implements KeyListener {
 
         createMenuBar();
 
+        al_right.add(new Rectangle(0, 480, 40, 40));
+        al_right.add(new Rectangle(510, 480, 70, 40));
+        al_right.add(new Rectangle(305, 480, 40, 40));
+        al_right.add(new Rectangle(0, 240, 40, 40));
+        al_right.add(new Rectangle(395, 240, 70, 40));
+        al_right.add(new Rectangle(650, 240, 40, 40));
+
+        al_left.add(new Rectangle(0, 365, 40, 40));
+        al_left.add(new Rectangle(510, 365, 70, 40));
+        al_left.add(new Rectangle(305, 365, 40, 40));
+        al_left.add(new Rectangle(0, 120, 40, 40));
+        al_left.add(new Rectangle(395, 120, 70, 40));
+        al_left.add(new Rectangle(650, 120, 40, 40));
+
+
         new Thread(() -> {
             runFlag = true;
             while (runFlag) {
@@ -71,7 +91,7 @@ public class Game extends JFrame implements KeyListener {
         }).start();
     }
 
-    private void createMenuBar(){
+    private void createMenuBar() {
 
         setMenuBar(mb);
         mb.add(sounds);
@@ -113,26 +133,31 @@ public class Game extends JFrame implements KeyListener {
         g.setColor(Color.decode("#8A9B0F"));
         g.fillRect((int) r_frog.getX(), (int) r_frog.getY(), (int) r_frog.getWidth(), (int) r_frog.getHeight());
 
-        Rectangle r1 = new Rectangle(x * 100, 480, 50, 40);
-        Rectangle r2 = new Rectangle(x * 150, 240, 50, 40);
-
         g.setColor(Color.white);
-        g.fillRect((int) r1.getX(), (int) r1.getY(), (int) r1.getWidth(), (int) r1.getHeight());
-        g.fillRect((int) r2.getX(), (int) r2.getY(), (int) r2.getWidth(), (int) r2.getHeight());
-
-        if ((r1.intersects(r_frog) || r2.intersects(r_frog)) && runFlag) {
-            runFlag = false;
-            gameOver();
+        for (Rectangle r2 : al_right) {
+            g.fillRect((int) r2.getX(), (int) r2.getY(), (int) r2.getWidth(), (int) r2.getHeight());
+            if (r2.intersects(r_frog) && runFlag) {
+                runFlag = false;
+                gameOver();
+            }
+            r2.setLocation((int) r2.getX() + 35, (int) r2.getY());
+            if (r2.getX() >= 800) {
+                r2.setLocation(0, (int) r2.getY());
+            }
         }
-        //r1.setLocation(9, 9);
 
-        x++;
-        if (x >= 8) {
-            x = 0;
+        for (Rectangle r3 : al_left) {
+            g.fillRect((int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight());
+            if (r3.intersects(r_frog) && runFlag) {
+                runFlag = false;
+                gameOver();
+            }
+            r3.setLocation((int) r3.getX() - 30, (int) r3.getY());
+            if (r3.getX() <= 0) {
+                r3.setLocation(800, (int) r3.getY());
+            }
         }
     }
-
-    int xa = 560;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -146,9 +171,9 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP)
+        if (e.getKeyCode() == KeyEvent.VK_UP && xa > 60)
             xa = xa - 50;
-        if (e.getKeyCode() == KeyEvent.VK_DOWN)
+        if (e.getKeyCode() == KeyEvent.VK_DOWN && xa < 560)
             xa = xa + 50;
     }
 
