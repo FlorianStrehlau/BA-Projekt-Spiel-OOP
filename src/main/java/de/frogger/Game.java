@@ -3,6 +3,7 @@ package de.frogger;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Rectangle;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class Game extends JFrame implements KeyListener {
     private Image frog;
     int x = 1;
     int xa = 560;
+    // velo = gamevelocity
+    int velo = 600;
 
 
     ArrayList<Rectangle> al_right = new ArrayList<Rectangle>();
@@ -38,7 +41,7 @@ public class Game extends JFrame implements KeyListener {
     Menu sounds = new Menu("Sounds");
     MenuItem musik = new MenuItem("Musik");
 
-    Menu option = new Menu("Option");
+    Menu option = new Menu("Difficulty");
     MenuItem option1 = new MenuItem("Option1");
     MenuItem option2 = new MenuItem("Option2");
     MenuItem option3 = new MenuItem("Option3");
@@ -75,6 +78,32 @@ public class Game extends JFrame implements KeyListener {
         al_left.add(new Rectangle(395, 120, 70, 40));
         al_left.add(new Rectangle(650, 120, 40, 40));
 
+        /**
+         * Actionlistener als anonyme Klasse - Schwierigkeitswahl
+         */
+        option1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                velo = 600;
+            }
+        });
+
+        option2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                velo = 400;
+            }
+        });
+
+        option3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                velo = 300;
+            }
+        });
+
+        option4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                velo = 100;
+            }
+        });
 
         new Thread(() -> {
             runFlag = true;
@@ -84,7 +113,7 @@ public class Game extends JFrame implements KeyListener {
                 SwingUtilities.invokeLater(Game.this::repaint);
 
                 try {
-                    Thread.sleep(600);
+                    Thread.sleep(velo);
                 } catch (Exception e) {
                 }
             }
