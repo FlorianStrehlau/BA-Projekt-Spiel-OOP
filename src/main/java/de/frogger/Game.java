@@ -23,7 +23,7 @@ public class Game extends JFrame implements KeyListener {
     int x = 1;
     int xa = 560;
     // velo = gamevelocity
-    int velo = 600;
+    int velo = 4;
 
 
     ArrayList<Rectangle> al_right = new ArrayList<Rectangle>();
@@ -83,25 +83,25 @@ public class Game extends JFrame implements KeyListener {
          */
         option1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                velo = 600;
+                velo = 6;
             }
         });
 
         option2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                velo = 400;
+                velo = 8;
             }
         });
 
         option3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                velo = 300;
+                velo = 9;
             }
         });
 
         option4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                velo = 100;
+                velo = 12;
             }
         });
 
@@ -113,7 +113,7 @@ public class Game extends JFrame implements KeyListener {
                 SwingUtilities.invokeLater(Game.this::repaint);
 
                 try {
-                    Thread.sleep(velo);
+                    Thread.sleep(33);
                 } catch (Exception e) {
                 }
             }
@@ -169,9 +169,9 @@ public class Game extends JFrame implements KeyListener {
                 runFlag = false;
                 gameOver();
             }
-            r2.setLocation((int) r2.getX() + 35, (int) r2.getY());
-            if (r2.getX() >= 800) {
-                r2.setLocation(0, (int) r2.getY());
+            r2.setLocation((int) r2.getX() + velo, (int) r2.getY());
+            if (r2.getX() >= 800 + (int) r2.getWidth()) {
+                r2.setLocation(0 - (int) r2.getWidth(), (int) r2.getY());
             }
         }
 
@@ -181,9 +181,9 @@ public class Game extends JFrame implements KeyListener {
                 runFlag = false;
                 gameOver();
             }
-            r3.setLocation((int) r3.getX() - 30, (int) r3.getY());
-            if (r3.getX() <= 0) {
-                r3.setLocation(800, (int) r3.getY());
+            r3.setLocation((int) r3.getX() - velo, (int) r3.getY());
+            if (r3.getX() <= 0 - (int) r3.getWidth()) {
+                r3.setLocation(800 + (int) r3.getWidth(), (int) r3.getY());
             }
         }
     }
