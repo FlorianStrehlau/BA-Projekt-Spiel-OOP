@@ -10,31 +10,30 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
- * Handles playing, stoping, and looping of sounds for the game.
- * @author Tyler Thomas
- *
+ * Handles the sound management in the game
+ * plays, loops or stops wav files
  */
 public class Sound {
+
     private Clip clip;
 
+    /*
+     * If the file exists, AudioInputStream
+     * is generated and new Clip is opened
+    */
     public void setFile(String fileName) {
-        // specify the sound to play
-        // (assuming the sound can be played by the audio system)
-        // from a wave File
+
         try {
             File file = new File(fileName);
             if (file.exists()) {
-                AudioInputStream sound = AudioSystem.getAudioInputStream(file);
-                // load the sound into memory (a Clip)
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
                 clip = AudioSystem.getClip();
-                clip.open(sound);
+                clip.open(audioInputStream);
             }
             else {
                 throw new RuntimeException("Sound: file not found: " + fileName);
             }
         }
-
-
         // These Exceptions must be present
         catch (MalformedURLException e) {
             e.printStackTrace();
@@ -52,17 +51,21 @@ public class Sound {
             e.printStackTrace();
             throw new RuntimeException("Sound: Line Unavailable Exception Error: " + e);
         }
-
-        // play, stop, loop the sound clip
     }
+    // Plays sound from beginning of song once
     public void play(){
         clip.setFramePosition(0);
         clip.start();
     }
+    // Loops song
     public void loop(){
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    /*
+     * Stops song and closes Clip so that another song
+     * can be played
+     */
     public void stopSound(){
         clip.stop();
         clip.drain();
