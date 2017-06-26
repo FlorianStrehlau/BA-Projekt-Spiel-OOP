@@ -25,7 +25,7 @@ public class Game extends JFrame implements KeyListener {
     int x_frog = 380;
     // velo = gamevelocity
     int velo = 4;
-
+    int score = 0;
 
     ArrayList<Rectangle> al_right = new ArrayList<Rectangle>();
     ArrayList<Rectangle> al_left = new ArrayList<Rectangle>();
@@ -47,6 +47,7 @@ public class Game extends JFrame implements KeyListener {
     MenuItem option2 = new MenuItem("Option2");
     MenuItem option3 = new MenuItem("Option3");
     MenuItem option4 = new MenuItem("Option4");
+    Menu points = new Menu("Score: "+score);
 
     Game(String title) {
         this.setSize(800, 600);
@@ -122,6 +123,8 @@ public class Game extends JFrame implements KeyListener {
                 } catch (Exception e) {
                 }
             }
+
+
         }).start();
     }
 
@@ -141,6 +144,7 @@ public class Game extends JFrame implements KeyListener {
         option3.setActionCommand("230");
         option.add(option4);
 
+        mb.add(points);
     }
 
     @Override
@@ -191,6 +195,10 @@ public class Game extends JFrame implements KeyListener {
                 r3.setLocation(800 + (int) r3.getWidth(), (int) r3.getY());
             }
         }
+
+        if (y_frog <= 70) {
+            gameContinues();
+        }
     }
 
     @Override
@@ -219,5 +227,12 @@ public class Game extends JFrame implements KeyListener {
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
         System.exit(ABORT);
+    }
+
+    public void gameContinues() {
+        score = score + 1;
+        points.setLabel("Score: "+score);
+        y_frog = 560;
+        x_frog = 380;
     }
 }
