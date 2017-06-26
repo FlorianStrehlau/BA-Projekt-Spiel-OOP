@@ -21,7 +21,8 @@ public class Game extends JFrame implements KeyListener {
     private int highway_height = street_height * street_count;
     private Image frog;
     int x = 1;
-    int xa = 560;
+    int y_frog = 560;
+    int x_frog = 380;
     // velo = gamevelocity
     int velo = 4;
 
@@ -158,7 +159,7 @@ public class Game extends JFrame implements KeyListener {
             g.fillRect(i * 100, 440, 50, 10);
         }
 
-        Rectangle r_frog = new Rectangle(400, xa, 20, 20);
+        Rectangle r_frog = new Rectangle(x_frog, y_frog, 20, 20);
         g.setColor(Color.decode("#8A9B0F"));
         g.fillRect((int) r_frog.getX(), (int) r_frog.getY(), (int) r_frog.getWidth(), (int) r_frog.getHeight());
 
@@ -200,10 +201,14 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP && xa > 60)
-            xa = xa - 50;
-        if (e.getKeyCode() == KeyEvent.VK_DOWN && xa < 560)
-            xa = xa + 50;
+        if (e.getKeyCode() == KeyEvent.VK_UP && y_frog > 60)
+            y_frog = y_frog - 50;
+        if (e.getKeyCode() == KeyEvent.VK_DOWN && y_frog < 560)
+            y_frog = y_frog + 50;
+        if (e.getKeyCode() == KeyEvent.VK_LEFT && x_frog > 60)
+            x_frog = x_frog - 50;
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT && x_frog < 760)
+            x_frog = x_frog + 50;
     }
 
 
