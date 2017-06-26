@@ -25,6 +25,7 @@ public class Game extends JFrame implements KeyListener {
     // velo = gamevelocity
     int velo = 4;
     int score = 0;
+    int round = 0;
     private Sound victory = new Sound();
 
     ArrayList<Rectangle> al_right = new ArrayList<Rectangle>();
@@ -39,17 +40,17 @@ public class Game extends JFrame implements KeyListener {
 
     // Menubar components
     MenuBar mb = new MenuBar();
-    Menu sounds = new Menu("Sounds");
-    MenuItem music1 = new MenuItem("Music 1");
-    MenuItem music2 = new MenuItem("Music 2");
-    MenuItem music3 = new MenuItem("Music 3");
+    Menu sounds = new Menu("Music");
+    MenuItem music1 = new MenuItem("Ageless River");
+    MenuItem music2 = new MenuItem("Rhythms in the Clouds");
+    MenuItem music3 = new MenuItem("DOAX2-2");
 
     Menu option = new Menu("Difficulty");
-    MenuItem option1 = new MenuItem("Option1");
-    MenuItem option2 = new MenuItem("Option2");
-    MenuItem option3 = new MenuItem("Option3");
-    MenuItem option4 = new MenuItem("Option4");
-    Menu points = new Menu("Score: "+score);
+    MenuItem option1 = new MenuItem("Normal");
+    MenuItem option2 = new MenuItem("Hard");
+    MenuItem option3 = new MenuItem("Very Hard");
+    MenuItem option4 = new MenuItem("Nightmare!");
+    Menu points = new Menu("Score: " + score);
 
 
     Game(String title) {
@@ -75,7 +76,6 @@ public class Game extends JFrame implements KeyListener {
         backgroundmusic.play();
 
 
-
         al_right.add(new Rectangle(0, 480, 40, 40));
         al_right.add(new Rectangle(510, 480, 70, 40));
         al_right.add(new Rectangle(305, 480, 40, 40));
@@ -91,29 +91,42 @@ public class Game extends JFrame implements KeyListener {
         al_left.add(new Rectangle(650, 120, 40, 40));
 
         /**
-         * Actionlistener als anonyme Klasse - Schwierigkeitswahl
+         * Actionlistener anonymous class
+         * Select Difficulty, this adjusts rounds and resets score
          */
         option1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 velo = 6;
+                score = 0;
+                round = 3;
+                points.setLabel("Score: " + score);
             }
         });
 
         option2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 velo = 8;
+                score = 0;
+                round = 5;
+                points.setLabel("Score: " + score);
             }
         });
 
         option3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 velo = 9;
+                score = 0;
+                round = 7;
+                points.setLabel("Score: " + score);
             }
         });
 
         option4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 velo = 12;
+                score = 0;
+                round = 9;
+                points.setLabel("Score: " + score);
             }
         });
 
@@ -136,7 +149,7 @@ public class Game extends JFrame implements KeyListener {
         });
 
         music3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
                 backgroundmusic.stopSound();
                 backgroundmusic.setFile("DOAX2-2Excerpt.wav");
                 backgroundmusic.play();
@@ -260,10 +273,51 @@ public class Game extends JFrame implements KeyListener {
     }
 
     public void gameContinues() {
-        score = score + 1;
+        round++;
+        /*
+         * Determines the round and sets the difficulty level
+         * and game score
+         */
+        if (round < 10) {
+            switch (round) {
+                case 1:
+                    score = score + 1;
+                    break;
+                case 3:
+                    score = score + 1;
+                    velo = 6;
+                    break;
+                case 4:
+                    score = score + 2;
+                    break;
+                case 5:
+                    score = score + 2;
+                    velo = 8;
+                    break;
+                case 6:
+                    score = score + 3;
+                    break;
+                case 7:
+                    score = score + 3;
+                    velo = 9;
+                    break;
+                case 8:
+                    score = score + 4;
+                    break;
+                case 9:
+                    score = score + 4;
+                    velo = 12;
+                default:
+                    score = score + 1;
+            }
+        }
+        else{
+            score = score + 5;
+        }
+
         victory.setFile("FrogWin.wav");
         victory.play();
-        points.setLabel("Score: "+score);
+        points.setLabel("Score: " + score);
         y_frog = 560;
         x_frog = 380;
     }
