@@ -31,28 +31,28 @@ public class Sound {
                 clip.open(audioInputStream);
             }
             else {
-                throw new RuntimeException("Sound: file not found: " + fileName);
+                throw new RuntimeException("Error, missing file: " + fileName);
             }
         }
         // These Exceptions must be present
         catch (MalformedURLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Malformed URL: " + e);
+            throw new RuntimeException("Error, URL is not correct: " + e);
         }
         catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Unsupported Audio File: " + e);
+            throw new RuntimeException("Error unsupported file: " + e);
         }
         catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Input/Output Error: " + e);
+            throw new RuntimeException("I/O Error " + e);
         }
         catch (LineUnavailableException e) {
             e.printStackTrace();
-            throw new RuntimeException("Sound: Line Unavailable Exception Error: " + e);
+            throw new RuntimeException("Error, Line unavailable: " + e);
         }
     }
-    // Plays sound from beginning of song once
+    // Plays song once
     public void play(){
         clip.setFramePosition(0);
         clip.start();
