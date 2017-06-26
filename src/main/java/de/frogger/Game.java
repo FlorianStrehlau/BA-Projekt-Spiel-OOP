@@ -3,7 +3,6 @@ package de.frogger;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Rectangle;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -40,7 +39,9 @@ public class Game extends JFrame implements KeyListener {
     // Menubar components
     MenuBar mb = new MenuBar();
     Menu sounds = new Menu("Sounds");
-    MenuItem musik = new MenuItem("Musik");
+    MenuItem music1 = new MenuItem("Music 1");
+    MenuItem music2 = new MenuItem("Music 2");
+    MenuItem music3 = new MenuItem("Music 3");
 
     Menu option = new Menu("Difficulty");
     MenuItem option1 = new MenuItem("Option1");
@@ -48,6 +49,7 @@ public class Game extends JFrame implements KeyListener {
     MenuItem option3 = new MenuItem("Option3");
     MenuItem option4 = new MenuItem("Option4");
     Menu points = new Menu("Score: "+score);
+
 
     Game(String title) {
         this.setSize(800, 600);
@@ -66,8 +68,11 @@ public class Game extends JFrame implements KeyListener {
 
         createMenuBar();
 
-        Sound backgroundmusic = new Sound("AgelessRiverExcerpt.wav");
+        // Initial song that plays in the background
+        Sound backgroundmusic = new Sound();
+        backgroundmusic.setFile("AgelessRiverExcerpt.wav");
         backgroundmusic.play();
+
 
 
         al_right.add(new Rectangle(0, 480, 40, 40));
@@ -111,6 +116,32 @@ public class Game extends JFrame implements KeyListener {
             }
         });
 
+        music1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                backgroundmusic.stopSound();
+                backgroundmusic.setFile("AgelessRiverExcerpt.wav");
+                backgroundmusic.play();
+                //Sound backgroundmusic = new Sound("AgelessRiverExcerpt.wav");
+                //backgroundmusic.play();
+            }
+        });
+
+        music2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                backgroundmusic.stopSound();
+                backgroundmusic.setFile("RhythmsInTheCloudsExcerpt.wav");
+                backgroundmusic.play();
+            }
+        });
+
+        music3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e){
+                backgroundmusic.stopSound();
+                backgroundmusic.setFile("DOAX2-2Excerpt.wav");
+                backgroundmusic.play();
+            }
+        });
+
         new Thread(() -> {
             runFlag = true;
             while (runFlag) {
@@ -132,16 +163,14 @@ public class Game extends JFrame implements KeyListener {
 
         setMenuBar(mb);
         mb.add(sounds);
-
-        sounds.add(musik);
+        sounds.add(music1);
+        sounds.add(music2);
+        sounds.add(music3);
 
         mb.add(option);
         option.add(option1);
-        option1.setActionCommand("210");
         option.add(option2);
-        option2.setActionCommand("220");
         option.add(option3);
-        option3.setActionCommand("230");
         option.add(option4);
 
         mb.add(points);
