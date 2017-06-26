@@ -25,6 +25,7 @@ public class Game extends JFrame implements KeyListener {
     // velo = gamevelocity
     int velo = 4;
     int score = 0;
+    private Sound victory = new Sound();
 
     ArrayList<Rectangle> al_right = new ArrayList<Rectangle>();
     ArrayList<Rectangle> al_left = new ArrayList<Rectangle>();
@@ -260,6 +261,8 @@ public class Game extends JFrame implements KeyListener {
 
     public void gameContinues() {
         score = score + 1;
+        victory.setFile("FrogWin.wav");
+        victory.play();
         points.setLabel("Score: "+score);
         y_frog = 560;
         x_frog = 380;
