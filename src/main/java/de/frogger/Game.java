@@ -65,6 +65,10 @@ public class Game extends JFrame implements KeyListener {
 
         createMenuBar();
 
+        Sound backgroundmusic = new Sound("AgelessRiverExcerpt.wav");
+        backgroundmusic.play();
+
+
         al_right.add(new Rectangle(0, 480, 40, 40));
         al_right.add(new Rectangle(510, 480, 70, 40));
         al_right.add(new Rectangle(305, 480, 40, 40));
