@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 
-/**
+/*
  * Created by Flow on 18.05.2017.
  */
 
@@ -73,7 +73,7 @@ public class Game extends JFrame implements KeyListener {
         // Initial song that plays in the background
         Sound backgroundmusic = new Sound();
         backgroundmusic.setFile("AgelessRiverExcerpt.wav");
-        backgroundmusic.play();
+        backgroundmusic.loop();
 
 
         al_right.add(new Rectangle(0, 480, 40, 40));
@@ -90,9 +90,9 @@ public class Game extends JFrame implements KeyListener {
         al_left.add(new Rectangle(395, 120, 70, 40));
         al_left.add(new Rectangle(650, 120, 40, 40));
 
-        /**
+        /*
          * Actionlistener anonymous class
-         * Select Difficulty, this adjusts rounds and resets score
+         * adjusts rounds and resets score on difficulty select
          */
         option1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -134,9 +134,7 @@ public class Game extends JFrame implements KeyListener {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 backgroundmusic.stopSound();
                 backgroundmusic.setFile("AgelessRiverExcerpt.wav");
-                backgroundmusic.play();
-                //Sound backgroundmusic = new Sound("AgelessRiverExcerpt.wav");
-                //backgroundmusic.play();
+                backgroundmusic.loop();
             }
         });
 
@@ -144,7 +142,7 @@ public class Game extends JFrame implements KeyListener {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 backgroundmusic.stopSound();
                 backgroundmusic.setFile("RhythmsInTheCloudsExcerpt.wav");
-                backgroundmusic.play();
+                backgroundmusic.loop();
             }
         });
 
@@ -152,7 +150,7 @@ public class Game extends JFrame implements KeyListener {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 backgroundmusic.stopSound();
                 backgroundmusic.setFile("DOAX2-2Excerpt.wav");
-                backgroundmusic.play();
+                backgroundmusic.loop();
             }
         });
 
