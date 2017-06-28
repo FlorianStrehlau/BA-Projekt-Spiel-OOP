@@ -262,7 +262,7 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void paint(Graphics g) {
-        if (getOsName() == null) {
+        if (getOsName().equals("MAC OS X") || getOsName().equals("LINUX")) {
             g.drawImage(rendered, 0, 0, null);
         } else {
             g.drawImage(rendered, 0, 40, null);
