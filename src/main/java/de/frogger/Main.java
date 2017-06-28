@@ -6,7 +6,7 @@ package de.frogger;
 public class Main {
 
     public static void main(String[]a){
-        Game game = new Game("froggy");
+        Game game = new Game("frogger");
 
 
     }

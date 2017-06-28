@@ -37,8 +37,9 @@ public class Game extends JFrame implements KeyListener {
 
 
     //car images - left / right
-    private Image Cars[] = new Image[8];
+    private Image Cars[] = new Image[9];
 
+    boolean motorcycles_added=false;
     boolean runFlag;
 
     // Menubar components
@@ -66,8 +67,8 @@ public class Game extends JFrame implements KeyListener {
         this.requestFocus();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        for (int carCount = 1; carCount < 8; carCount++) {
-            Cars[carCount-1] = getImage("car" + carCount + ".png");
+        for (int carCount = 1; carCount < 9; carCount++) {
+            Cars[carCount - 1] = getImage("car" + carCount + ".png");
         }
 
 
@@ -99,6 +100,8 @@ public class Game extends JFrame implements KeyListener {
 
 
 
+
+
         /*
          * Actionlistener anonymous class
          * adjusts rounds and resets score on difficulty select
@@ -114,7 +117,9 @@ public class Game extends JFrame implements KeyListener {
 
         option2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                velo = 8;
+                if (motorcycles_added == false)
+                    addMotorcycles();
+                motorcycles_added = true;                velo = 8;
                 score = 0;
                 round = 5;
                 points.setLabel("Score: " + score);
@@ -229,7 +234,7 @@ public class Game extends JFrame implements KeyListener {
         g.setColor(Color.white);
         for (Car r2 : al_right) {
             //g.fillRect((int) r2.getX(), (int) r2.getY(), (int) r2.getWidth(), (int) r2.getHeight());
-            g.drawImage(Cars[r2.texture], (int) r2.getX()+(int)r2.getWidth(), (int) r2.getY(), (int)-r2.getWidth(), (int)r2.getHeight(),null);
+            g.drawImage(Cars[r2.texture], (int) r2.getX() + (int) r2.getWidth(), (int) r2.getY(), (int) -r2.getWidth(), (int) r2.getHeight(), null);
 
             if (r2.intersects(r_frog) && runFlag) {
                 runFlag = false;
@@ -242,8 +247,8 @@ public class Game extends JFrame implements KeyListener {
         }
 
         for (Car r3 : al_left) {
-           //g.fillRect((int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight());
-            g.drawImage(Cars[r3.texture], (int) r3.getX(), (int) r3.getY(), (int)r3.getWidth(), (int)r3.getHeight(), null);
+            //g.fillRect((int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight());
+            g.drawImage(Cars[r3.texture], (int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight(), null);
             if (r3.intersects(r_frog) && runFlag) {
                 runFlag = false;
                 gameOver();
@@ -281,6 +286,14 @@ public class Game extends JFrame implements KeyListener {
             x_frog = x_frog + 50;
     }
 
+    public void addMotorcycles() {
+        al_right.add(new Car(120, 170, 50, 20, 7));
+        al_right.add(new Car(30, 455, 50, 20, 7));
+        al_left.add(new Car(240, 215, 50, 20, 7));
+        al_left.add(new Car(140, 405, 50, 20, 7));
+        return;
+    }
+
 
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
@@ -299,6 +312,9 @@ public class Game extends JFrame implements KeyListener {
                     score = score + 1;
                     break;
                 case 3:
+                    if (motorcycles_added == false)
+                        addMotorcycles();
+                    motorcycles_added = true;
                     score = score + 1;
                     velo = 6;
                     break;
