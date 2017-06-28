@@ -45,7 +45,7 @@ public class Game extends JFrame implements KeyListener {
     //car images - left / right
     private Image Cars[] = new Image[9];
 
-    boolean motorcycles_added=false;
+    boolean motorcycles_added = false;
     boolean runFlag;
 
     // Menubar components
@@ -66,7 +66,12 @@ public class Game extends JFrame implements KeyListener {
     BufferedImage rendered;
 
     Game(String title) {
-        this.setSize(800, 600);
+        if (getOsName() == null) {
+            this.setSize(800, 600);
+        } else {
+            this.setSize(800, 645);
+        }
+
         this.setTitle(title);
         this.addKeyListener(this);
         this.setFocusable(true);
@@ -97,17 +102,24 @@ public class Game extends JFrame implements KeyListener {
 
 
         al_right.add(new Car(0, 480, 80, 40, 0));
-        al_right.add(new Car(510, 480, 80, 40, 0));
+        al_right.add(new Car(510, 480, 80, 40, 4));
         al_right.add(new Car(205, 480, 80, 40, 1));
+        al_right.add(new Car(790, 480, 80, 40, 2));
+        al_right.add(new Car(990, 480, 80, 40, 0));
         al_right.add(new Car(0, 120, 80, 40, 3));
         al_right.add(new Car(510, 120, 80, 40, 2));
         al_right.add(new Car(205, 120, 80, 40, 0));
+        al_right.add(new Car(740, 120, 80, 40, 5));
+        al_right.add(new Car(990, 120, 80, 40, 1));
 
 
         al_left.add(new Car(0, 365, 80, 40, 1));
         al_left.add(new Car(510, 365, 80, 40, 0));
-        al_left.add(new Car(305, 365, 80, 40, 0));
-        al_left.add(new Car(0, 240, 80, 40, 2));
+        al_left.add(new Car(305, 365, 80, 40, 5));
+        al_left.add(new Car(990, 365, 80, 40, 2));
+        al_left.add(new Car(760, 365, 80, 40, 3));
+        al_left.add(new Car(790, 240, 80, 40, 5));
+        al_left.add(new Car(990, 240, 80, 40, 2));
         al_left.add(new Car(210, 240, 80, 40, 3));
         al_left.add(new Car(530, 240, 180, 50, 6));
 
@@ -132,7 +144,8 @@ public class Game extends JFrame implements KeyListener {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (motorcycles_added == false)
                     addMotorcycles();
-                motorcycles_added = true;                velo = 8;
+                motorcycles_added = true;
+                velo = 8;
                 score = 0;
                 round = 5;
                 points.setLabel("Score: " + score);
@@ -141,6 +154,9 @@ public class Game extends JFrame implements KeyListener {
 
         option3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (motorcycles_added == false)
+                    addMotorcycles();
+                motorcycles_added = true;
                 velo = 9;
                 score = 0;
                 round = 7;
@@ -150,6 +166,9 @@ public class Game extends JFrame implements KeyListener {
 
         option4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (motorcycles_added == false)
+                    addMotorcycles();
+                motorcycles_added = true;
                 velo = 12;
                 score = 0;
                 round = 9;
@@ -159,6 +178,9 @@ public class Game extends JFrame implements KeyListener {
 
         option5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (motorcycles_added == false)
+                    addMotorcycles();
+                motorcycles_added = true;
                 velo = 25;
                 score = 0;
                 round = 15;
@@ -229,9 +251,22 @@ public class Game extends JFrame implements KeyListener {
     public void update(Graphics g) {
     }
 
+    private static String OS = null;
+
+    public static String getOsName() {
+        if (OS == null) {
+            OS = System.getProperty("os.name");
+        }
+        return OS;
+    }
+
     @Override
     public void paint(Graphics g) {
-        g.drawImage(rendered, 0, 0, null);
+        if (getOsName() == null) {
+            g.drawImage(rendered, 0, 0, null);
+        } else {
+            g.drawImage(rendered, 0, 40, null);
+        }
     }
 
     public void zeichneFrogger(Graphics g) {
@@ -249,22 +284,22 @@ public class Game extends JFrame implements KeyListener {
             g.fillRect(i * 100, 440, 50, 10);
         }
 
-        g.drawImage(coast,0,20,null);
+        g.drawImage(coast, 0, 20, null);
         // Palm trees south
-        g.drawImage(palm1, 100, 530,null);
-        g.drawImage(palm1, 470, 541,null);
-        g.drawImage(palm4, 250, 550,null);
-        g.drawImage(palm2, 50, 536,null);
-        g.drawImage(palm3, 600, 543,null);
-        g.drawImage(palm5, 680, 530,null);
+        g.drawImage(palm1, 100, 530, null);
+        g.drawImage(palm1, 470, 541, null);
+        g.drawImage(palm4, 250, 550, null);
+        g.drawImage(palm2, 50, 536, null);
+        g.drawImage(palm3, 600, 543, null);
+        g.drawImage(palm5, 680, 530, null);
 
         // Palm trees north
-        g.drawImage(palm2, 80, 42,null);
-        g.drawImage(palm5, 400, 37,null);
-        g.drawImage(palm1, 190, 35,null);
-        g.drawImage(palm4, 25, 41,null);
-        g.drawImage(palm2, 604, 50,null);
-        g.drawImage(palm3, 670, 55,null);
+        g.drawImage(palm2, 80, 42, null);
+        g.drawImage(palm5, 400, 37, null);
+        g.drawImage(palm1, 190, 35, null);
+        g.drawImage(palm4, 25, 41, null);
+        g.drawImage(palm2, 604, 50, null);
+        g.drawImage(palm3, 670, 55, null);
 
         Rectangle r_frog = new Rectangle(x_frog, y_frog, 20, 20);
         g.setColor(Color.decode("#8A9B0F"));
@@ -281,8 +316,8 @@ public class Game extends JFrame implements KeyListener {
                 gameOver();
             }
             r2.setLocation((int) r2.getX() + velo, (int) r2.getY());
-            if (r2.getX() >= 800 + (int) r2.getWidth()) {
-                r2.setLocation(0 - (int) r2.getWidth(), (int) r2.getY());
+            if (r2.getX() >= 980) {
+                r2.setLocation(-180, (int) r2.getY());
             }
         }
 
@@ -294,8 +329,8 @@ public class Game extends JFrame implements KeyListener {
                 gameOver();
             }
             r3.setLocation((int) r3.getX() - velo, (int) r3.getY());
-            if (r3.getX() <= 0 - (int) r3.getWidth()) {
-                r3.setLocation(800 + (int) r3.getWidth(), (int) r3.getY());
+            if (r3.getX() <= -180) {
+                r3.setLocation(980, (int) r3.getY());
             }
         }
 
