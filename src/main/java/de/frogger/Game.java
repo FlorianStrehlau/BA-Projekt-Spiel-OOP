@@ -37,6 +37,11 @@ public class Game extends JFrame implements KeyListener {
     int score = 0;
     int round = 0;
     private Sound victory = new Sound();
+    int yCoast = 0;
+    boolean downwards = true;
+    // to adjust wave timing without thread sleep
+    private final long PERIOD = 80L;
+    private long lastTime = System.currentTimeMillis() - PERIOD;
 
     ArrayList<Car> al_right = new ArrayList<>();
     ArrayList<Car> al_left = new ArrayList<>();
@@ -122,8 +127,6 @@ public class Game extends JFrame implements KeyListener {
         al_left.add(new Car(990, 240, 80, 40, 2));
         al_left.add(new Car(210, 240, 80, 40, 3));
         al_left.add(new Car(530, 240, 180, 50, 6));
-
-
 
 
 
@@ -284,7 +287,39 @@ public class Game extends JFrame implements KeyListener {
             g.fillRect(i * 100, 440, 50, 10);
         }
 
-        g.drawImage(coast, 0, 20, null);
+        /*
+         * waves move slowly, without thread.sleep
+         */
+        g.drawImage(coast,0,yCoast,null);
+
+        long thisTime = System.currentTimeMillis();
+
+        if ((thisTime - lastTime) >= PERIOD) {
+            lastTime = thisTime;
+
+            if (downwards){
+                if (yCoast <= 0){
+                    downwards = false;
+                    yCoast++;
+                }
+                else {
+                    yCoast--;
+                }
+            }
+            else {
+                if (yCoast >= 20){
+                    downwards = true;
+                    yCoast--;
+                }
+                else {
+                    yCoast++;
+                }
+            }
+        }
+
+
+
+
         // Palm trees south
         g.drawImage(palm1, 100, 530, null);
         g.drawImage(palm1, 470, 541, null);
