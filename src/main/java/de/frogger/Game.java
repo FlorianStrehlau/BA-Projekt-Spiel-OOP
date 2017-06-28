@@ -1,10 +1,14 @@
 package de.frogger;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -28,13 +32,12 @@ public class Game extends JFrame implements KeyListener {
     int round = 0;
     private Sound victory = new Sound();
 
-    ArrayList<Rectangle> al_right = new ArrayList<Rectangle>();
-    ArrayList<Rectangle> al_left = new ArrayList<Rectangle>();
+    ArrayList<Car> al_right = new ArrayList<>();
+    ArrayList<Car> al_left = new ArrayList<>();
 
 
     //car images - left / right
-    private Image leftCars[] = new Image[2];
-    private Image rightCars[] = new Image[2];
+    private Image Cars[] = new Image[8];
 
     boolean runFlag;
 
@@ -52,6 +55,7 @@ public class Game extends JFrame implements KeyListener {
     MenuItem option4 = new MenuItem("Nightmare!");
     Menu points = new Menu("Score: " + score);
 
+    BufferedImage rendered;
 
     Game(String title) {
         this.setSize(800, 600);
@@ -61,12 +65,14 @@ public class Game extends JFrame implements KeyListener {
         this.setVisible(true);
         this.requestFocus();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /*for (int carCount = 0; carCount < 2; carCount++ ){
-            leftCars[carCount] = getImage("cars/leftcar"+carCount+".jpg");
-            rightCars[carCount] = getImage("cars/rightcar"+carCount+".jpg");
+
+        for (int carCount = 1; carCount < 8; carCount++) {
+            Cars[carCount-1] = getImage("car" + carCount + ".png");
         }
 
-        frog = getImage ("frog/frogger.jpg");*/
+
+        frog = getImage("frogChar.png");
+        rendered = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 
         createMenuBar();
 
@@ -76,19 +82,22 @@ public class Game extends JFrame implements KeyListener {
         backgroundmusic.loop();
 
 
-        al_right.add(new Rectangle(0, 480, 40, 40));
-        al_right.add(new Rectangle(510, 480, 70, 40));
-        al_right.add(new Rectangle(305, 480, 40, 40));
-        al_right.add(new Rectangle(0, 240, 40, 40));
-        al_right.add(new Rectangle(395, 240, 70, 40));
-        al_right.add(new Rectangle(650, 240, 40, 40));
+        al_right.add(new Car(0, 480, 80, 40, 0));
+        al_right.add(new Car(510, 480, 80, 40, 0));
+        al_right.add(new Car(205, 480, 80, 40, 1));
+        al_right.add(new Car(0, 120, 80, 40, 3));
+        al_right.add(new Car(510, 120, 80, 40, 2));
+        al_right.add(new Car(205, 120, 80, 40, 0));
 
-        al_left.add(new Rectangle(0, 365, 40, 40));
-        al_left.add(new Rectangle(510, 365, 70, 40));
-        al_left.add(new Rectangle(305, 365, 40, 40));
-        al_left.add(new Rectangle(0, 120, 40, 40));
-        al_left.add(new Rectangle(395, 120, 70, 40));
-        al_left.add(new Rectangle(650, 120, 40, 40));
+
+        al_left.add(new Car(0, 365, 80, 40, 1));
+        al_left.add(new Car(510, 365, 80, 40, 0));
+        al_left.add(new Car(305, 365, 80, 40, 0));
+        al_left.add(new Car(0, 240, 80, 40, 2));
+        al_left.add(new Car(210, 240, 80, 40, 3));
+        al_left.add(new Car(530, 240, 180, 50, 6));
+
+
 
         /*
          * Actionlistener anonymous class
@@ -158,7 +167,7 @@ public class Game extends JFrame implements KeyListener {
             runFlag = true;
             while (runFlag) {
 
-                ///calc
+                zeichneFrogger(rendered.getGraphics());
                 SwingUtilities.invokeLater(Game.this::repaint);
 
                 try {
@@ -194,6 +203,10 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void paint(Graphics g) {
+        g.drawImage(rendered, 0, 0, null);
+    }
+
+    public void zeichneFrogger(Graphics g) {
 
         g.setColor(Color.decode("#5B7E77"));
         g.fillRect(0, 0, highway_width, 600);
@@ -210,11 +223,14 @@ public class Game extends JFrame implements KeyListener {
 
         Rectangle r_frog = new Rectangle(x_frog, y_frog, 20, 20);
         g.setColor(Color.decode("#8A9B0F"));
-        g.fillRect((int) r_frog.getX(), (int) r_frog.getY(), (int) r_frog.getWidth(), (int) r_frog.getHeight());
+        //g.fillRect((int) r_frog.getX(), (int) r_frog.getY(), (int) r_frog.getWidth(), (int) r_frog.getHeight());
+        g.drawImage(frog, (int) r_frog.getX(), (int) r_frog.getY(), null);
 
         g.setColor(Color.white);
-        for (Rectangle r2 : al_right) {
-            g.fillRect((int) r2.getX(), (int) r2.getY(), (int) r2.getWidth(), (int) r2.getHeight());
+        for (Car r2 : al_right) {
+            //g.fillRect((int) r2.getX(), (int) r2.getY(), (int) r2.getWidth(), (int) r2.getHeight());
+            g.drawImage(Cars[r2.texture], (int) r2.getX()+(int)r2.getWidth(), (int) r2.getY(), (int)-r2.getWidth(), (int)r2.getHeight(),null);
+
             if (r2.intersects(r_frog) && runFlag) {
                 runFlag = false;
                 gameOver();
@@ -225,8 +241,9 @@ public class Game extends JFrame implements KeyListener {
             }
         }
 
-        for (Rectangle r3 : al_left) {
-            g.fillRect((int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight());
+        for (Car r3 : al_left) {
+           //g.fillRect((int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight());
+            g.drawImage(Cars[r3.texture], (int) r3.getX(), (int) r3.getY(), (int)r3.getWidth(), (int)r3.getHeight(), null);
             if (r3.intersects(r_frog) && runFlag) {
                 runFlag = false;
                 gameOver();
@@ -308,8 +325,7 @@ public class Game extends JFrame implements KeyListener {
                 default:
                     score = score + 1;
             }
-        }
-        else{
+        } else {
             score = score + 5;
         }
 
@@ -318,5 +334,14 @@ public class Game extends JFrame implements KeyListener {
         points.setLabel("Score: " + score);
         y_frog = 560;
         x_frog = 380;
+    }
+
+    Image getImage(String path) {
+        try {
+            return ImageIO.read(new File(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
