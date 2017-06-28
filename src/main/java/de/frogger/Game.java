@@ -23,6 +23,12 @@ public class Game extends JFrame implements KeyListener {
     private int street_count = 4;
     private int highway_height = street_height * street_count;
     private Image frog;
+    private Image palm1;
+    private Image palm2;
+    private Image palm3;
+    private Image palm4;
+    private Image palm5;
+    private Image coast;
     int x = 1;
     int y_frog = 560;
     int x_frog = 380;
@@ -53,7 +59,8 @@ public class Game extends JFrame implements KeyListener {
     MenuItem option1 = new MenuItem("Normal");
     MenuItem option2 = new MenuItem("Hard");
     MenuItem option3 = new MenuItem("Very Hard");
-    MenuItem option4 = new MenuItem("Nightmare!");
+    MenuItem option4 = new MenuItem("Nightmare");
+    MenuItem option5 = new MenuItem("Overkill!");
     Menu points = new Menu("Score: " + score);
 
     BufferedImage rendered;
@@ -73,6 +80,12 @@ public class Game extends JFrame implements KeyListener {
 
 
         frog = getImage("frogChar.png");
+        palm1 = getImage("palm1.png");
+        palm2 = getImage("palm2.png");
+        palm3 = getImage("palm3.png");
+        palm4 = getImage("palm4.png");
+        palm5 = getImage("palm5.png");
+        coast = getImage("coast.png");
         rendered = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 
         createMenuBar();
@@ -144,6 +157,15 @@ public class Game extends JFrame implements KeyListener {
             }
         });
 
+        option5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                velo = 25;
+                score = 0;
+                round = 15;
+                points.setLabel("Score: " + score);
+            }
+        });
+
         music1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 backgroundmusic.stopSound();
@@ -198,6 +220,7 @@ public class Game extends JFrame implements KeyListener {
         option.add(option2);
         option.add(option3);
         option.add(option4);
+        option.add(option5);
 
         mb.add(points);
     }
@@ -213,7 +236,7 @@ public class Game extends JFrame implements KeyListener {
 
     public void zeichneFrogger(Graphics g) {
 
-        g.setColor(Color.decode("#5B7E77"));
+        g.setColor(Color.decode("#EED78F"));
         g.fillRect(0, 0, highway_width, 600);
         g.setColor(Color.decode("#A0A08E"));
         g.fillRect(0, 100, highway_width, highway_height + 40);
@@ -225,6 +248,23 @@ public class Game extends JFrame implements KeyListener {
             g.fillRect(i * 100, 200, 50, 10);
             g.fillRect(i * 100, 440, 50, 10);
         }
+
+        g.drawImage(coast,0,20,null);
+        // Palm trees south
+        g.drawImage(palm1, 100, 530,null);
+        g.drawImage(palm1, 470, 541,null);
+        g.drawImage(palm4, 250, 550,null);
+        g.drawImage(palm2, 50, 536,null);
+        g.drawImage(palm3, 600, 543,null);
+        g.drawImage(palm5, 680, 530,null);
+
+        // Palm trees north
+        g.drawImage(palm2, 80, 42,null);
+        g.drawImage(palm5, 400, 37,null);
+        g.drawImage(palm1, 190, 35,null);
+        g.drawImage(palm4, 25, 41,null);
+        g.drawImage(palm2, 604, 50,null);
+        g.drawImage(palm3, 670, 55,null);
 
         Rectangle r_frog = new Rectangle(x_frog, y_frog, 20, 20);
         g.setColor(Color.decode("#8A9B0F"));
@@ -306,7 +346,7 @@ public class Game extends JFrame implements KeyListener {
          * Determines the round and sets the difficulty level
          * and game score
          */
-        if (round < 10) {
+        if (round < 16) {
             switch (round) {
                 case 1:
                     score = score + 1;
@@ -338,11 +378,31 @@ public class Game extends JFrame implements KeyListener {
                 case 9:
                     score = score + 4;
                     velo = 12;
+                    break;
+                case 10:
+                    score = score + 5;
+                    break;
+                case 11:
+                    score = score + 5;
+                    break;
+                case 12:
+                    score = score + 5;
+                    break;
+                case 13:
+                    score = score + 5;
+                    break;
+                case 14:
+                    score = score + 5;
+                    break;
+                case 15:
+                    score = score + 5;
+                    velo = 25;
+                    break;
                 default:
                     score = score + 1;
             }
         } else {
-            score = score + 5;
+            score = score + 10;
         }
 
         victory.setFile("FrogWin.wav");
