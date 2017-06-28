@@ -66,7 +66,7 @@ public class Game extends JFrame implements KeyListener {
     BufferedImage rendered;
 
     Game(String title) {
-        if (getOsName() == null) {
+        if (getOsName().equals("Mac OS X") || getOsName().equals("Linux")) {
             this.setSize(800, 600);
         } else {
             this.setSize(800, 645);
@@ -251,7 +251,7 @@ public class Game extends JFrame implements KeyListener {
     public void update(Graphics g) {
     }
 
-    private static String OS = null;
+    static String OS = null;
 
     public static String getOsName() {
         if (OS == null) {
@@ -262,7 +262,7 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void paint(Graphics g) {
-        if (getOsName().equals("MAC OS X") || getOsName().equals("LINUX")) {
+        if (getOsName().equals("Mac OS X") || getOsName().equals("Linux")) {
             g.drawImage(rendered, 0, 0, null);
         } else {
             g.drawImage(rendered, 0, 40, null);
