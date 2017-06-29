@@ -71,10 +71,12 @@ public class Game extends JFrame implements KeyListener {
     BufferedImage rendered;
 
     Game(String title) {
-        if (getOsName().equals("Mac OS X") || getOsName().equals("Linux")) {
-            this.setSize(800, 600);
-        } else {
+
+        if (getOsName().toLowerCase().contains("windows")){
             this.setSize(800, 645);
+        }
+        else {
+            this.setSize(800, 600);
         }
 
         this.setTitle(title);
@@ -265,10 +267,11 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void paint(Graphics g) {
-        if (getOsName().equals("Mac OS X") || getOsName().equals("Linux")) {
-            g.drawImage(rendered, 0, 0, null);
-        } else {
+        if (getOsName().toLowerCase().contains("windows")) {
             g.drawImage(rendered, 0, 40, null);
+        }
+        else {
+            g.drawImage(rendered, 0, 0, null);
         }
     }
 
@@ -278,7 +281,7 @@ public class Game extends JFrame implements KeyListener {
         g.fillRect(0, 0, highway_width, 600);
         g.setColor(Color.decode("#A0A08E"));
         g.fillRect(0, 100, highway_width, highway_height + 40);
-        g.setColor(Color.decode("#372B2D"));
+        g.setColor(Color.decode("#76766B"));
         g.fillRect(0, 300, 800, 40);
 
         g.setColor(Color.white);
@@ -316,9 +319,6 @@ public class Game extends JFrame implements KeyListener {
                 }
             }
         }
-
-
-
 
         // Palm trees south
         g.drawImage(palm1, 100, 530, null);
