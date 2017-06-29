@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 
 /*
@@ -33,7 +32,6 @@ public class Game extends JFrame implements KeyListener {
     private Image palm4;
     private Image palm5;
     private Image coast;
-    private Image gameOverlay;
     int x = 1;
     int y_frog = 560;
     int x_frog = 380;
@@ -54,7 +52,7 @@ public class Game extends JFrame implements KeyListener {
 
 
     //car images - left / right
-    private Image Cars[] = new Image[9];
+    private Image Cars[] = new Image[10];
 
     boolean motorcycles_added = false;
     boolean runFlag;
@@ -78,10 +76,9 @@ public class Game extends JFrame implements KeyListener {
 
     Game(String title) {
 
-        if (getOsName().toLowerCase().contains("windows")){
+        if (getOsName().toLowerCase().contains("windows")) {
             this.setSize(800, 645);
-        }
-        else {
+        } else {
             this.setSize(800, 600);
         }
 
@@ -92,7 +89,7 @@ public class Game extends JFrame implements KeyListener {
         this.requestFocus();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        for (int carCount = 1; carCount < 9; carCount++) {
+        for (int carCount = 1; carCount < 11; carCount++) {
             Cars[carCount - 1] = getImage("car" + carCount + ".png");
         }
 
@@ -107,9 +104,10 @@ public class Game extends JFrame implements KeyListener {
         palm4 = getImage("palm4.png");
         palm5 = getImage("palm5.png");
         coast = getImage("coast.png");
-        gameOverlay = getImage("gameOverlay.png");
-
         rendered = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
+
+        int[] GapCar1 = {0, 205, 510, 790, 990};
+        int[] GapCar2 = {0, 305, 510, 660, 990};
 
         createMenuBar();
 
@@ -118,30 +116,13 @@ public class Game extends JFrame implements KeyListener {
         backgroundmusic.setFile("AgelessRiverExcerpt.wav");
         backgroundmusic.loop();
 
-
-        al_right.add(new Car(0, 480, 80, 40, 0));
-        al_right.add(new Car(510, 480, 80, 40, 4));
-        al_right.add(new Car(205, 480, 80, 40, 1));
-        al_right.add(new Car(790, 480, 80, 40, 2));
-        al_right.add(new Car(990, 480, 80, 40, 0));
-        al_right.add(new Car(0, 120, 80, 40, 3));
-        al_right.add(new Car(510, 120, 80, 40, 2));
-        al_right.add(new Car(205, 120, 80, 40, 0));
-        al_right.add(new Car(740, 120, 80, 40, 5));
-        al_right.add(new Car(990, 120, 80, 40, 1));
-
-
-        al_left.add(new Car(0, 365, 80, 40, 1));
-        al_left.add(new Car(510, 365, 80, 40, 0));
-        al_left.add(new Car(305, 365, 80, 40, 5));
-        al_left.add(new Car(990, 365, 80, 40, 2));
-        al_left.add(new Car(760, 365, 80, 40, 3));
-        al_left.add(new Car(790, 240, 80, 40, 5));
-        al_left.add(new Car(990, 240, 80, 40, 2));
-        al_left.add(new Car(210, 240, 80, 40, 3));
-        al_left.add(new Car(530, 240, 180, 50, 6));
-
-
+        for (int i = 0; i < 5; i++) {
+            al_right.add(new Car(GapCar1[i], 480, 80, 40, (int) (Math.random() * 6)));
+            al_right.add(new Car(GapCar2[i], 120, 80, 40, (int) (Math.random() * 6)));
+            al_left.add(new Car(GapCar1[i], 365, 80, 40, (int) (Math.random() * 6)));
+            al_left.add(new Car(GapCar2[i], 240, 80, 40, (int) (Math.random() * 6)));
+        }
+        al_left.add(new Car(230, 240, 180, 50, (int) (Math.random() * 8) + 7));
 
         /*
          * Actionlistener anonymous class
@@ -280,8 +261,7 @@ public class Game extends JFrame implements KeyListener {
     public void paint(Graphics g) {
         if (getOsName().toLowerCase().contains("windows")) {
             g.drawImage(rendered, 0, 40, null);
-        }
-        else {
+        } else {
             g.drawImage(rendered, 0, 0, null);
         }
     }
@@ -304,31 +284,25 @@ public class Game extends JFrame implements KeyListener {
         /*
          * waves move slowly, without thread.sleep
          */
-        g.drawImage(coast,0,yCoast,null);
+        g.drawImage(coast, 0, yCoast, null);
 
         long thisTime = System.currentTimeMillis();
-
-        int[] coastRand = {15,16,17,18,19,20};
-        int coastY = (coastRand[new Random().nextInt(coastRand.length)]);
 
         if ((thisTime - lastTime) >= PERIOD) {
             lastTime = thisTime;
 
-            if (downwards){
-                if (yCoast <= 0){
+            if (downwards) {
+                if (yCoast <= 0) {
                     downwards = false;
                     yCoast++;
-                }
-                else {
+                } else {
                     yCoast--;
                 }
-            }
-            else {
-                if (yCoast >= coastY){
+            } else {
+                if (yCoast >= 20) {
                     downwards = true;
                     yCoast--;
-                }
-                else {
+                } else {
                     yCoast++;
                 }
             }
@@ -354,7 +328,7 @@ public class Game extends JFrame implements KeyListener {
         g.setColor(Color.decode("#8A9B0F"));
         //g.fillRect((int) r_frog.getX(), (int) r_frog.getY(), (int) r_frog.getWidth(), (int) r_frog.getHeight());
 
-        switch (keySwitch){
+        switch (keySwitch) {
             case 0:
                 g.drawImage(frog, (int) r_frog.getX(), (int) r_frog.getY(), null);
                 break;
@@ -373,7 +347,6 @@ public class Game extends JFrame implements KeyListener {
             default:
                 g.drawImage(frog, (int) r_frog.getX(), (int) r_frog.getY(), null);
         }
-
 
 
         g.setColor(Color.white);
@@ -421,43 +394,39 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP && y_frog > 60){
+        if (e.getKeyCode() == KeyEvent.VK_UP && y_frog > 60) {
             keySwitch = 1;
             y_frog = y_frog - 50;
         }
-        if (e.getKeyCode() == KeyEvent.VK_DOWN && y_frog < 560){
+        if (e.getKeyCode() == KeyEvent.VK_DOWN && y_frog < 560) {
             keySwitch = 2;
             y_frog = y_frog + 50;
         }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT && x_frog > 60){
+        if (e.getKeyCode() == KeyEvent.VK_LEFT && x_frog > 60) {
             x_frog = x_frog - 50;
             keySwitch = 3;
         }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT && x_frog < 760){
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT && x_frog < 760) {
             keySwitch = 4;
             x_frog = x_frog + 50;
         }
     }
 
     public void addMotorcycles() {
-            al_right.add(new Car(120, 170, 50, 20, 7));
-            al_right.add(new Car(30, 455, 50, 20, 7));
-            al_left.add(new Car(240, 215, 50, 20, 7));
-            al_left.add(new Car(140, 405, 50, 20, 7));
+        al_right.add(new Car(620, 170, 50, 20, 9));
+        al_left.add(new Car(400, 455, 50, 20, 9));
+        al_left.add(new Car(240, 215, 50, 20, 9));
+        al_right.add(new Car(700, 405, 50, 20, 9));
         return;
     }
 
 
     public void gameOver() {
 
-        getGraphics().drawImage(gameOverlay,0,0,800,645,null);
-
         if (JOptionPane.showConfirmDialog(this, "Do you want to continue?", "Game Over",
-                JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             round = -1;
             score = -1;
-            velo = 4;
-            motorcycles_added = false;
             gameContinues();
         } else {
             System.exit(ABORT);
@@ -530,7 +499,7 @@ public class Game extends JFrame implements KeyListener {
             score = score + 10;
         }
 
-        if(score != 0){
+        if (score != 0) {
             victory.setFile("FrogWin.wav");
             victory.play();
         }
