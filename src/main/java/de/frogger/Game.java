@@ -375,7 +375,7 @@ public class Game extends JFrame implements KeyListener {
             g.drawImage(Cars[r2.texture], (int) r2.getX() + (int) r2.getWidth(), (int) r2.getY(), (int) -r2.getWidth(), (int) r2.getHeight(), null);
 
             if (r2.intersects(r_frog) && runFlag) {
-                runFlag = false;
+
                 gameOver();
             }
             r2.setLocation((int) r2.getX() + velo, (int) r2.getY());
@@ -388,7 +388,7 @@ public class Game extends JFrame implements KeyListener {
             //g.fillRect((int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight());
             g.drawImage(Cars[r3.texture], (int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight(), null);
             if (r3.intersects(r_frog) && runFlag) {
-                runFlag = false;
+
                 gameOver();
             }
             r3.setLocation((int) r3.getX() - velo, (int) r3.getY());
@@ -442,8 +442,16 @@ public class Game extends JFrame implements KeyListener {
 
 
     public void gameOver() {
-        JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
-        System.exit(ABORT);
+
+        if (JOptionPane.showConfirmDialog(this, "Do you want to continue?", "Game Over",
+                JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            round = -1;
+            score = -1;
+            gameContinues();
+        } else {
+            System.exit(ABORT);
+        }
+
     }
 
     public void gameContinues() {
@@ -511,8 +519,10 @@ public class Game extends JFrame implements KeyListener {
             score = score + 10;
         }
 
-        victory.setFile("FrogWin.wav");
-        victory.play();
+        if(score != 0){
+            victory.setFile("FrogWin.wav");
+            victory.play();
+        }
         points.setLabel("Score: " + score);
         y_frog = 560;
         x_frog = 380;
