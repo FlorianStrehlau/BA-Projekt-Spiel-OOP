@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /*
@@ -32,6 +33,7 @@ public class Game extends JFrame implements KeyListener {
     private Image palm4;
     private Image palm5;
     private Image coast;
+    private Image gameOverlay;
     int x = 1;
     int y_frog = 560;
     int x_frog = 380;
@@ -105,6 +107,8 @@ public class Game extends JFrame implements KeyListener {
         palm4 = getImage("palm4.png");
         palm5 = getImage("palm5.png");
         coast = getImage("coast.png");
+        gameOverlay = getImage("gameOverlay.png");
+
         rendered = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 
         createMenuBar();
@@ -304,6 +308,9 @@ public class Game extends JFrame implements KeyListener {
 
         long thisTime = System.currentTimeMillis();
 
+        int[] coastRand = {15,16,17,18,19,20};
+        int coastY = (coastRand[new Random().nextInt(coastRand.length)]);
+
         if ((thisTime - lastTime) >= PERIOD) {
             lastTime = thisTime;
 
@@ -317,7 +324,7 @@ public class Game extends JFrame implements KeyListener {
                 }
             }
             else {
-                if (yCoast >= 20){
+                if (yCoast >= coastY){
                     downwards = true;
                     yCoast--;
                 }
@@ -433,20 +440,24 @@ public class Game extends JFrame implements KeyListener {
     }
 
     public void addMotorcycles() {
-        al_right.add(new Car(120, 170, 50, 20, 7));
-        al_right.add(new Car(30, 455, 50, 20, 7));
-        al_left.add(new Car(240, 215, 50, 20, 7));
-        al_left.add(new Car(140, 405, 50, 20, 7));
+            al_right.add(new Car(120, 170, 50, 20, 7));
+            al_right.add(new Car(30, 455, 50, 20, 7));
+            al_left.add(new Car(240, 215, 50, 20, 7));
+            al_left.add(new Car(140, 405, 50, 20, 7));
         return;
     }
 
 
     public void gameOver() {
 
+        getGraphics().drawImage(gameOverlay,0,0,800,645,null);
+
         if (JOptionPane.showConfirmDialog(this, "Do you want to continue?", "Game Over",
                 JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             round = -1;
             score = -1;
+            velo = 4;
+            motorcycles_added = false;
             gameContinues();
         } else {
             System.exit(ABORT);
