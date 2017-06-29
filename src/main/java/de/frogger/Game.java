@@ -23,6 +23,9 @@ public class Game extends JFrame implements KeyListener {
     private int street_count = 4;
     private int highway_height = street_height * street_count;
     private Image frog;
+    private Image frogR;
+    private Image frogL;
+    private Image frogD;
     private Image palm1;
     private Image palm2;
     private Image palm3;
@@ -42,6 +45,7 @@ public class Game extends JFrame implements KeyListener {
     // to adjust wave timing without thread sleep
     private final long PERIOD = 80L;
     private long lastTime = System.currentTimeMillis() - PERIOD;
+    int keySwitch = 0;
 
     ArrayList<Car> al_right = new ArrayList<>();
     ArrayList<Car> al_left = new ArrayList<>();
@@ -92,6 +96,9 @@ public class Game extends JFrame implements KeyListener {
 
 
         frog = getImage("frogChar.png");
+        frogR = getImage("Frog_r.png");
+        frogL = getImage("Frog_l.png");
+        frogD = getImage("Frog_d.png");
         palm1 = getImage("palm1.png");
         palm2 = getImage("palm2.png");
         palm3 = getImage("palm3.png");
@@ -339,7 +346,28 @@ public class Game extends JFrame implements KeyListener {
         Rectangle r_frog = new Rectangle(x_frog, y_frog, 20, 20);
         g.setColor(Color.decode("#8A9B0F"));
         //g.fillRect((int) r_frog.getX(), (int) r_frog.getY(), (int) r_frog.getWidth(), (int) r_frog.getHeight());
-        g.drawImage(frog, (int) r_frog.getX(), (int) r_frog.getY(), null);
+
+        switch (keySwitch){
+            case 0:
+                g.drawImage(frog, (int) r_frog.getX(), (int) r_frog.getY(), null);
+                break;
+            case 1:
+                g.drawImage(frog, (int) r_frog.getX(), (int) r_frog.getY(), null);
+                break;
+            case 2:
+                g.drawImage(frogD, (int) r_frog.getX(), (int) r_frog.getY(), null);
+                break;
+            case 3:
+                g.drawImage(frogL, (int) r_frog.getX(), (int) r_frog.getY(), null);
+                break;
+            case 4:
+                g.drawImage(frogR, (int) r_frog.getX(), (int) r_frog.getY(), null);
+                break;
+            default:
+                g.drawImage(frog, (int) r_frog.getX(), (int) r_frog.getY(), null);
+        }
+
+
 
         g.setColor(Color.white);
         for (Car r2 : al_right) {
@@ -386,14 +414,22 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP && y_frog > 60)
+        if (e.getKeyCode() == KeyEvent.VK_UP && y_frog > 60){
+            keySwitch = 1;
             y_frog = y_frog - 50;
-        if (e.getKeyCode() == KeyEvent.VK_DOWN && y_frog < 560)
+        }
+        if (e.getKeyCode() == KeyEvent.VK_DOWN && y_frog < 560){
+            keySwitch = 2;
             y_frog = y_frog + 50;
-        if (e.getKeyCode() == KeyEvent.VK_LEFT && x_frog > 60)
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT && x_frog > 60){
             x_frog = x_frog - 50;
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT && x_frog < 760)
+            keySwitch = 3;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT && x_frog < 760){
+            keySwitch = 4;
             x_frog = x_frog + 50;
+        }
     }
 
     public void addMotorcycles() {
