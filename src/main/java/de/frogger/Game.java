@@ -52,7 +52,7 @@ public class Game extends JFrame implements KeyListener {
 
 
     //car images - left / right
-    private Image Cars[] = new Image[10];
+    private Image Cars[] = new Image[12];
 
     boolean motorcycles_added = false;
     boolean runFlag;
@@ -89,7 +89,7 @@ public class Game extends JFrame implements KeyListener {
         this.requestFocus();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        for (int carCount = 1; carCount < 11; carCount++) {
+        for (int carCount = 1; carCount <= 10; carCount++) {
             Cars[carCount - 1] = getImage("car" + carCount + ".png");
         }
 
@@ -122,7 +122,7 @@ public class Game extends JFrame implements KeyListener {
             al_left.add(new Car(GapCar1[i], 365, 80, 40, (int) (Math.random() * 6)));
             al_left.add(new Car(GapCar2[i], 240, 80, 40, (int) (Math.random() * 6)));
         }
-        al_left.add(new Car(230, 240, 180, 50, (int) (Math.random() * 8) + 7));
+        al_left.add(new Car(230, 240, 180, 50, (int) (Math.random() * 2) + 6));
 
         /*
          * Actionlistener anonymous class
@@ -393,7 +393,8 @@ public class Game extends JFrame implements KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void
+    keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP && y_frog > 60) {
             keySwitch = 1;
             y_frog = y_frog - 50;
@@ -413,10 +414,10 @@ public class Game extends JFrame implements KeyListener {
     }
 
     public void addMotorcycles() {
-        al_right.add(new Car(620, 170, 50, 20, 9));
-        al_left.add(new Car(400, 455, 50, 20, 9));
-        al_left.add(new Car(240, 215, 50, 20, 9));
-        al_right.add(new Car(700, 405, 50, 20, 9));
+        al_right.add(new Car(620, 170, 50, 20, (int)(Math.random() * 2) + 8));
+        al_left.add(new Car(400, 455, 50, 20, (int)(Math.random() * 2) + 8));
+        al_left.add(new Car(240, 215, 50, 20, (int)(Math.random() * 2) + 8));
+        al_right.add(new Car(700, 405, 50, 20, (int)(Math.random() * 2) + 8));
         return;
     }
 
