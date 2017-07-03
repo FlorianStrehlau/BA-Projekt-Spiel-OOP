@@ -110,7 +110,7 @@ public class Game extends JFrame implements KeyListener {
         rendered = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 
         int[] GapCar1 = {0, 205, 510, 790, 990};
-        int[] GapCar2 = {0, 305, 510, 660, 990};
+        int[] GapCar2 = {0, 800, 510, 660, 990};
 
         createMenuBar();
 
@@ -121,11 +121,11 @@ public class Game extends JFrame implements KeyListener {
 
         for (int i = 0; i < 5; i++) {
             al_right.add(new Car(GapCar1[i], 480, 80, 40, (int) (Math.random() * 6)));
-            al_right.add(new Car(GapCar2[i], 120, 80, 40, (int) (Math.random() * 6)));
+            al_right.add(new Car(GapCar1[i], 240, 80, 40, (int) (Math.random() * 6)));
             al_left.add(new Car(GapCar1[i], 365, 80, 40, (int) (Math.random() * 6)));
-            al_left.add(new Car(GapCar2[i], 240, 80, 40, (int) (Math.random() * 6)));
+            al_left.add(new Car(GapCar2[i], 120, 80, 40, (int) (Math.random() * 6)));
         }
-        al_left.add(new Car(230, 240, 180, 50, (int) (Math.random() * 2) + 6));
+        al_left.add(new Car(230, 120, 180, 50, (int) (Math.random() * 2) + 6));
 
         /*
          * Actionlistener anonymous class
@@ -421,10 +421,10 @@ public class Game extends JFrame implements KeyListener {
     }
 
     public void addMotorcycles() {
-        al_right.add(new Car(620, 170, 50, 20, (int)(Math.random() * 2) + 8));
-        al_left.add(new Car(400, 455, 50, 20, (int)(Math.random() * 2) + 8));
-        al_left.add(new Car(240, 215, 50, 20, (int)(Math.random() * 2) + 8));
-        al_right.add(new Car(700, 405, 50, 20, (int)(Math.random() * 2) + 8));
+        al_right.add(new Car(620, 215, 50, 20, (int)(Math.random() * 2) + 8));
+        al_right.add(new Car(400, 455, 50, 20, (int)(Math.random() * 2) + 8));
+        al_left.add(new Car(240, 170, 50, 20, (int)(Math.random() * 2) + 8));
+        al_left.add(new Car(800, 405, 50, 20, (int)(Math.random() * 2) + 8));
         return;
     }
 
