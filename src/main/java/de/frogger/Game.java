@@ -48,6 +48,7 @@ public class Game extends JFrame implements KeyListener {
     private final long PERIOD = 80L;
     private long lastTime = System.currentTimeMillis() - PERIOD;
     int keySwitch = 0;
+    int highscore = 0;
 
     ArrayList<Car> al_right = new ArrayList<>();
     ArrayList<Car> al_left = new ArrayList<>();
@@ -444,9 +445,13 @@ public class Game extends JFrame implements KeyListener {
 
         getGraphics().drawImage(gameOverlay,0,0,800,645,null);
 
-        String highscore = Integer.toString(score);
+        //int tempScore = String.copyValueOf();
+        //String highscore = Integer.toString(score);
+        if(highscore < score){
+            highscore = score;
+        }
 
-        if(score > 0){
+        if(highscore > 0){
             if (JOptionPane.showConfirmDialog(this,
                     "Highscore: " + highscore +
                             "\nDo you want to continue?", "Game Over",
