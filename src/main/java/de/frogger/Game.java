@@ -136,6 +136,8 @@ public class Game extends JFrame implements KeyListener {
                 velo = 6;
                 score = 0;
                 round = 3;
+                y_frog = 560;
+                x_frog = 380;
                 points.setLabel("Score: " + score);
             }
         });
@@ -148,6 +150,8 @@ public class Game extends JFrame implements KeyListener {
                 velo = 8;
                 score = 0;
                 round = 5;
+                y_frog = 560;
+                x_frog = 380;
                 points.setLabel("Score: " + score);
             }
         });
@@ -160,6 +164,8 @@ public class Game extends JFrame implements KeyListener {
                 velo = 9;
                 score = 0;
                 round = 7;
+                y_frog = 560;
+                x_frog = 380;
                 points.setLabel("Score: " + score);
             }
         });
@@ -172,6 +178,8 @@ public class Game extends JFrame implements KeyListener {
                 velo = 12;
                 score = 0;
                 round = 9;
+                y_frog = 560;
+                x_frog = 380;
                 points.setLabel("Score: " + score);
             }
         });
@@ -184,6 +192,8 @@ public class Game extends JFrame implements KeyListener {
                 velo = 25;
                 score = 0;
                 round = 15;
+                y_frog = 560;
+                x_frog = 380;
                 points.setLabel("Score: " + score);
             }
         });
