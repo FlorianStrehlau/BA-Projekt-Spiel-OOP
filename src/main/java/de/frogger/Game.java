@@ -61,6 +61,8 @@ public class Game extends JFrame implements KeyListener {
 
     //car images - left / right
     private Image Cars[] = new Image[20];
+    private Image Palms[] = new Image[8];
+
 
     boolean motorcycles_added = false;
     boolean cars_added = false;
@@ -111,14 +113,9 @@ public class Game extends JFrame implements KeyListener {
         frogR = getImage("Frog_r.png");
         frogL = getImage("Frog_l.png");
         frogD = getImage("Frog_d.png");
-        palm1 = getImage("palm1.png");
-        palm2 = getImage("palm2.png");
-        palm3 = getImage("palm3.png");
-        palm4 = getImage("palm4.png");
-        palm5 = getImage("palm5.png");
-        palm6 = getImage("palm6.png");
-        palm7 = getImage("palm7.png");
-        palm8 = getImage("palm8.png");
+        for (int i = 1; i <= 8; i++) {
+            Palms[i - 1] = getImage("palm" + i + ".png");
+        }
         coast = getImage("coast.png");
         coast2 = getImage("coast2.png");
         gameOverlay = getImage("gameOverlay.png");
@@ -327,7 +324,7 @@ public class Game extends JFrame implements KeyListener {
     public void zeichneFrogger(Graphics g) {
 
 
-        if(nightTime){
+        if (nightTime) {
             g.setColor(Color.decode("#5a4f2c"));
             g.fillRect(0, 0, highway_width, 600);
             g.setColor(Color.decode("#404039"));
@@ -340,7 +337,7 @@ public class Game extends JFrame implements KeyListener {
                 g.fillRect(i * 100, 200, 50, 10);
                 g.fillRect(i * 100, 440, 50, 10);
             }
-        }else {
+        } else {
             g.setColor(Color.decode("#EED78F"));
             g.fillRect(0, 0, highway_width, 600);
             g.setColor(Color.decode("#A0A08E"));
@@ -355,18 +352,16 @@ public class Game extends JFrame implements KeyListener {
             }
         }
 
-
-
         /*
          * waves move slowly, without thread.sleep
          */
-        if(nightTime){
-            g.drawImage(coast2,0,yCoast,null);
-        }else {
+        if (nightTime) {
+            g.drawImage(coast2, 0, yCoast, null);
+        } else {
             g.drawImage(coast, 0, yCoast, null);
         }
 
-        int[] coastRand = {15,16,17,18,19,20};
+        int[] coastRand = {15, 16, 17, 18, 19, 20};
         int coastY = (coastRand[new Random().nextInt(coastRand.length)]);
 
 
@@ -392,38 +387,38 @@ public class Game extends JFrame implements KeyListener {
             }
         }
 
-        if(nightTime){
+        if (nightTime) {
             // Palm trees south
-            g.drawImage(palm7, 100, 530, null);
-            g.drawImage(palm7, 470, 541, null);
-            g.drawImage(palm6, 250, 550, null);
-            g.drawImage(palm8, 50, 536, null);
-            g.drawImage(palm7, 600, 543, null);
-            g.drawImage(palm6, 680, 530, null);
+            g.drawImage(Palms[6], 100, 530, null);
+            g.drawImage(Palms[6], 470, 541, null);
+            g.drawImage(Palms[5], 250, 550, null);
+            g.drawImage(Palms[7], 50, 536, null);
+            g.drawImage(Palms[6], 600, 543, null);
+            g.drawImage(Palms[5], 680, 530, null);
 
             // Palm trees north
-            g.drawImage(palm8, 80, 42, null);
-            g.drawImage(palm6, 400, 37, null);
-            g.drawImage(palm7, 190, 35, null);
-            g.drawImage(palm6, 25, 41, null);
-            g.drawImage(palm7, 604, 50, null);
-            g.drawImage(palm7, 670, 55, null);
-        }else {
+            g.drawImage(Palms[7], 80, 42, null);
+            g.drawImage(Palms[5], 400, 37, null);
+            g.drawImage(Palms[6], 190, 35, null);
+            g.drawImage(Palms[5], 25, 41, null);
+            g.drawImage(Palms[6], 604, 50, null);
+            g.drawImage(Palms[6], 670, 55, null);
+        } else {
             // Palm trees south
-            g.drawImage(palm1, 100, 530, null);
-            g.drawImage(palm1, 470, 541, null);
-            g.drawImage(palm4, 250, 550, null);
-            g.drawImage(palm2, 50, 536, null);
-            g.drawImage(palm3, 600, 543, null);
-            g.drawImage(palm5, 680, 530, null);
+            g.drawImage(Palms[0], 100, 530, null);
+            g.drawImage(Palms[0], 470, 541, null);
+            g.drawImage(Palms[3], 250, 550, null);
+            g.drawImage(Palms[1], 50, 536, null);
+            g.drawImage(Palms[2], 600, 543, null);
+            g.drawImage(Palms[4], 680, 530, null);
 
             // Palm trees north
-            g.drawImage(palm2, 80, 42, null);
-            g.drawImage(palm5, 400, 37, null);
-            g.drawImage(palm1, 190, 35, null);
-            g.drawImage(palm4, 25, 41, null);
-            g.drawImage(palm2, 604, 50, null);
-            g.drawImage(palm3, 670, 55, null);
+            g.drawImage(Palms[1], 80, 42, null);
+            g.drawImage(Palms[4], 400, 37, null);
+            g.drawImage(Palms[0], 190, 35, null);
+            g.drawImage(Palms[3], 25, 41, null);
+            g.drawImage(Palms[1], 604, 50, null);
+            g.drawImage(Palms[2], 670, 55, null);
 
         }
 
@@ -454,13 +449,12 @@ public class Game extends JFrame implements KeyListener {
         }
 
 
-
         g.setColor(Color.white);
 
         //collision detection (cars - right)
         for (Car r2 : al_right) {
             //g.fillRect((int) r2.getX(), (int) r2.getY(), (int) r2.getWidth(), (int) r2.getHeight());
-            g.drawImage(Cars[r2.texture+(nightTime?10:0)], (int) r2.getX() + (int) r2.getWidth(), (int) r2.getY(), (int) -r2.getWidth(), (int) r2.getHeight(), null);
+            g.drawImage(Cars[r2.texture + (nightTime ? 10 : 0)], (int) r2.getX() + (int) r2.getWidth(), (int) r2.getY(), (int) -r2.getWidth(), (int) r2.getHeight(), null);
 
             if (r2.intersects(r_frog) && runFlag) {
 
@@ -475,10 +469,10 @@ public class Game extends JFrame implements KeyListener {
         //collision detection (cars - left)
         for (Car r3 : al_left) {
             //g.fillRect((int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight());
-            g.drawImage(Cars[r3.texture+(nightTime?10:0)], (int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight(), null);
+            g.drawImage(Cars[r3.texture + (nightTime ? 10 : 0)], (int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight(), null);
             if (r3.intersects(r_frog) && runFlag) {
 
-                g.drawString("100",400,100);
+                g.drawString("100", 400, 100);
                 gameOver();
             }
             r3.setLocation((int) r3.getX() - velo, (int) r3.getY());
@@ -524,34 +518,34 @@ public class Game extends JFrame implements KeyListener {
     }
 
     public void addMotorcycles() {
-        al_right.add(new Car(620, 215, 50, 20, (int)(Math.random() * 2) + 8));
-        al_right.add(new Car(400, 455, 50, 20, (int)(Math.random() * 2) + 8));
-        al_left.add(new Car(240, 170, 50, 20, (int)(Math.random() * 2) + 8));
-        al_left.add(new Car(800, 405, 50, 20, (int)(Math.random() * 2) + 8));
+        al_right.add(new Car(620, 215, 50, 20, (int) (Math.random() * 2) + 8));
+        al_right.add(new Car(400, 455, 50, 20, (int) (Math.random() * 2) + 8));
+        al_left.add(new Car(240, 170, 50, 20, (int) (Math.random() * 2) + 8));
+        al_left.add(new Car(800, 405, 50, 20, (int) (Math.random() * 2) + 8));
         return;
     }
 
     public void addCars() {
-        al_right.add(new Car((int) al_right.get(2).getX()+420, 240, 80, 40, (int) (Math.random() * 6)));
-        al_left.add(new Car((int) al_left.get(2).getX()+120, 365, 80, 40, (int) (Math.random() * 6)));
-        al_right.add(new Car((int) al_right.get(2).getX()+420, 480, 80, 40, (int) (Math.random() * 6)));
+        al_right.add(new Car((int) al_right.get(2).getX() + 420, 240, 80, 40, (int) (Math.random() * 6)));
+        al_left.add(new Car((int) al_left.get(2).getX() + 120, 365, 80, 40, (int) (Math.random() * 6)));
+        al_right.add(new Car((int) al_right.get(2).getX() + 420, 480, 80, 40, (int) (Math.random() * 6)));
         return;
     }
 
 
     public void gameOver() {
 
-        getGraphics().drawImage(gameOverlay,0,0,800,645,null);
+        getGraphics().drawImage(gameOverlay, 0, 0, 800, 645, null);
 
-        if(highscore < score){
+        if (highscore < score) {
             highscore = score;
         }
 
-        if(highscore > 0){
+        if (highscore > 0) {
             if (JOptionPane.showConfirmDialog(this,
                     "Highscore: " + highscore +
                             "\nDo you want to continue?", "Game Over",
-                    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                 round = -1;
                 score = -1;
                 velo = 4;
@@ -559,10 +553,10 @@ public class Game extends JFrame implements KeyListener {
             } else {
                 System.exit(ABORT);
             }
-        }else {
+        } else {
             if (JOptionPane.showConfirmDialog(this,
-                            "Do you want to continue?", "Game Over",
-                    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    "Do you want to continue?", "Game Over",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                 round = -1;
                 score = -1;
                 velo = 4;
@@ -572,7 +566,6 @@ public class Game extends JFrame implements KeyListener {
                 System.exit(ABORT);
             }
         }
-
 
 
     }
@@ -589,7 +582,7 @@ public class Game extends JFrame implements KeyListener {
                     score = score + 1;
                     break;
                 case 2:
-                    score = score +1;
+                    score = score + 1;
                     break;
                 case 3:
                     if (motorcycles_added == false)
