@@ -32,8 +32,13 @@ public class Game extends JFrame implements KeyListener {
     private Image palm3;
     private Image palm4;
     private Image palm5;
+    private Image palm6;
+    private Image palm7;
+    private Image palm8;
     private Image coast;
+    private Image coast2;
     private Image gameOverlay;
+    boolean nightTime = false;
     int x = 1;
     int y_frog = 560;
     int x_frog = 380;
@@ -55,7 +60,7 @@ public class Game extends JFrame implements KeyListener {
 
 
     //car images - left / right
-    private Image Cars[] = new Image[12];
+    private Image Cars[] = new Image[20];
 
     boolean motorcycles_added = false;
     boolean cars_added = false;
@@ -97,7 +102,7 @@ public class Game extends JFrame implements KeyListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Loading images
-        for (int carCount = 1; carCount <= 10; carCount++) {
+        for (int carCount = 1; carCount <= 20; carCount++) {
             Cars[carCount - 1] = getImage("car" + carCount + ".png");
         }
 
@@ -111,7 +116,11 @@ public class Game extends JFrame implements KeyListener {
         palm3 = getImage("palm3.png");
         palm4 = getImage("palm4.png");
         palm5 = getImage("palm5.png");
+        palm6 = getImage("palm6.png");
+        palm7 = getImage("palm7.png");
+        palm8 = getImage("palm8.png");
         coast = getImage("coast.png");
+        coast2 = getImage("coast2.png");
         gameOverlay = getImage("gameOverlay.png");
         rendered = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 
@@ -317,23 +326,45 @@ public class Game extends JFrame implements KeyListener {
 
     public void zeichneFrogger(Graphics g) {
 
-        g.setColor(Color.decode("#EED78F"));
-        g.fillRect(0, 0, highway_width, 600);
-        g.setColor(Color.decode("#A0A08E"));
-        g.fillRect(0, 100, highway_width, highway_height + 40);
-        g.setColor(Color.decode("#76766B"));
-        g.fillRect(0, 300, 800, 40);
 
-        g.setColor(Color.white);
-        for (int i = 0; i < 9; i++) {
-            g.fillRect(i * 100, 200, 50, 10);
-            g.fillRect(i * 100, 440, 50, 10);
+        if(nightTime){
+            g.setColor(Color.decode("#5a4f2c"));
+            g.fillRect(0, 0, highway_width, 600);
+            g.setColor(Color.decode("#404039"));
+            g.fillRect(0, 100, highway_width, highway_height + 40);
+            g.setColor(Color.decode("#31312c"));
+            g.fillRect(0, 300, 800, 40);
+
+            g.setColor(Color.decode("#c7c7bb"));
+            for (int i = 0; i < 9; i++) {
+                g.fillRect(i * 100, 200, 50, 10);
+                g.fillRect(i * 100, 440, 50, 10);
+            }
+        }else {
+            g.setColor(Color.decode("#EED78F"));
+            g.fillRect(0, 0, highway_width, 600);
+            g.setColor(Color.decode("#A0A08E"));
+            g.fillRect(0, 100, highway_width, highway_height + 40);
+            g.setColor(Color.decode("#76766B"));
+            g.fillRect(0, 300, 800, 40);
+
+            g.setColor(Color.white);
+            for (int i = 0; i < 9; i++) {
+                g.fillRect(i * 100, 200, 50, 10);
+                g.fillRect(i * 100, 440, 50, 10);
+            }
         }
+
+
 
         /*
          * waves move slowly, without thread.sleep
          */
-        g.drawImage(coast, 0, yCoast, null);
+        if(nightTime){
+            g.drawImage(coast2,0,yCoast,null);
+        }else {
+            g.drawImage(coast, 0, yCoast, null);
+        }
 
         int[] coastRand = {15,16,17,18,19,20};
         int coastY = (coastRand[new Random().nextInt(coastRand.length)]);
@@ -361,21 +392,41 @@ public class Game extends JFrame implements KeyListener {
             }
         }
 
-        // Palm trees south
-        g.drawImage(palm1, 100, 530, null);
-        g.drawImage(palm1, 470, 541, null);
-        g.drawImage(palm4, 250, 550, null);
-        g.drawImage(palm2, 50, 536, null);
-        g.drawImage(palm3, 600, 543, null);
-        g.drawImage(palm5, 680, 530, null);
+        if(nightTime){
+            // Palm trees south
+            g.drawImage(palm7, 100, 530, null);
+            g.drawImage(palm7, 470, 541, null);
+            g.drawImage(palm6, 250, 550, null);
+            g.drawImage(palm8, 50, 536, null);
+            g.drawImage(palm7, 600, 543, null);
+            g.drawImage(palm6, 680, 530, null);
 
-        // Palm trees north
-        g.drawImage(palm2, 80, 42, null);
-        g.drawImage(palm5, 400, 37, null);
-        g.drawImage(palm1, 190, 35, null);
-        g.drawImage(palm4, 25, 41, null);
-        g.drawImage(palm2, 604, 50, null);
-        g.drawImage(palm3, 670, 55, null);
+            // Palm trees north
+            g.drawImage(palm8, 80, 42, null);
+            g.drawImage(palm6, 400, 37, null);
+            g.drawImage(palm7, 190, 35, null);
+            g.drawImage(palm6, 25, 41, null);
+            g.drawImage(palm7, 604, 50, null);
+            g.drawImage(palm7, 670, 55, null);
+        }else {
+            // Palm trees south
+            g.drawImage(palm1, 100, 530, null);
+            g.drawImage(palm1, 470, 541, null);
+            g.drawImage(palm4, 250, 550, null);
+            g.drawImage(palm2, 50, 536, null);
+            g.drawImage(palm3, 600, 543, null);
+            g.drawImage(palm5, 680, 530, null);
+
+            // Palm trees north
+            g.drawImage(palm2, 80, 42, null);
+            g.drawImage(palm5, 400, 37, null);
+            g.drawImage(palm1, 190, 35, null);
+            g.drawImage(palm4, 25, 41, null);
+            g.drawImage(palm2, 604, 50, null);
+            g.drawImage(palm3, 670, 55, null);
+
+        }
+
 
         Rectangle r_frog = new Rectangle(x_frog, y_frog, 20, 20);
         g.setColor(Color.decode("#8A9B0F"));
@@ -403,12 +454,13 @@ public class Game extends JFrame implements KeyListener {
         }
 
 
+
         g.setColor(Color.white);
 
         //collision detection (cars - right)
         for (Car r2 : al_right) {
             //g.fillRect((int) r2.getX(), (int) r2.getY(), (int) r2.getWidth(), (int) r2.getHeight());
-            g.drawImage(Cars[r2.texture], (int) r2.getX() + (int) r2.getWidth(), (int) r2.getY(), (int) -r2.getWidth(), (int) r2.getHeight(), null);
+            g.drawImage(Cars[r2.texture+(nightTime?10:0)], (int) r2.getX() + (int) r2.getWidth(), (int) r2.getY(), (int) -r2.getWidth(), (int) r2.getHeight(), null);
 
             if (r2.intersects(r_frog) && runFlag) {
 
@@ -423,7 +475,7 @@ public class Game extends JFrame implements KeyListener {
         //collision detection (cars - left)
         for (Car r3 : al_left) {
             //g.fillRect((int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight());
-            g.drawImage(Cars[r3.texture], (int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight(), null);
+            g.drawImage(Cars[r3.texture+(nightTime?10:0)], (int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight(), null);
             if (r3.intersects(r_frog) && runFlag) {
 
                 g.drawString("100",400,100);
@@ -491,8 +543,6 @@ public class Game extends JFrame implements KeyListener {
 
         getGraphics().drawImage(gameOverlay,0,0,800,645,null);
 
-        //int tempScore = String.copyValueOf();
-        //String highscore = Integer.toString(score);
         if(highscore < score){
             highscore = score;
         }
@@ -516,6 +566,7 @@ public class Game extends JFrame implements KeyListener {
                 round = -1;
                 score = -1;
                 velo = 4;
+                nightTime = false;
                 gameContinues();
             } else {
                 System.exit(ABORT);
@@ -537,6 +588,9 @@ public class Game extends JFrame implements KeyListener {
                 case 1:
                     score = score + 1;
                     break;
+                case 2:
+                    score = score +1;
+                    break;
                 case 3:
                     if (motorcycles_added == false)
                         addMotorcycles();
@@ -545,6 +599,7 @@ public class Game extends JFrame implements KeyListener {
                     velo = 6;
                     break;
                 case 4:
+                    nightTime = true;
                     score = score + 2;
                     break;
                 case 5:
@@ -555,6 +610,7 @@ public class Game extends JFrame implements KeyListener {
                     velo = 8;
                     break;
                 case 6:
+                    nightTime = false;
                     score = score + 3;
                     break;
                 case 7:
@@ -562,6 +618,7 @@ public class Game extends JFrame implements KeyListener {
                     velo = 9;
                     break;
                 case 8:
+                    nightTime = true;
                     score = score + 4;
                     break;
                 case 9:
@@ -569,18 +626,21 @@ public class Game extends JFrame implements KeyListener {
                     velo = 12;
                     break;
                 case 10:
+                    nightTime = false;
                     score = score + 5;
                     break;
                 case 11:
                     score = score + 5;
                     break;
                 case 12:
+                    nightTime = true;
                     score = score + 5;
                     break;
                 case 13:
                     score = score + 5;
                     break;
                 case 14:
+                    nightTime = false;
                     score = score + 5;
                     break;
                 case 15:
