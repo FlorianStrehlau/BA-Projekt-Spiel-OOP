@@ -58,6 +58,8 @@ public class Game extends JFrame implements KeyListener {
     private Image Cars[] = new Image[12];
 
     boolean motorcycles_added = false;
+    boolean cars_added = false;
+
     boolean runFlag;
 
     // Menubar components
@@ -78,7 +80,7 @@ public class Game extends JFrame implements KeyListener {
     BufferedImage rendered;
 
     Game(String title) {
-
+        //checking operating system (and set menu sizes)
         if (getOsName().toLowerCase().contains("windows")) {
             this.setSize(800, 645);
         } else {
@@ -92,6 +94,7 @@ public class Game extends JFrame implements KeyListener {
         this.requestFocus();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        //Loading images
         for (int carCount = 1; carCount <= 10; carCount++) {
             Cars[carCount - 1] = getImage("car" + carCount + ".png");
         }
@@ -110,8 +113,10 @@ public class Game extends JFrame implements KeyListener {
         gameOverlay = getImage("gameOverlay.png");
         rendered = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 
-        int[] GapCar1 = {0, 205, 510, 790, 990};
-        int[] GapCar2 = {0, 800, 510, 660, 990};
+        int[] GapCar1 = {0, 205, 510, 990};
+        int[] GapCar2 = {0, 800, 510, 660};
+        int[] GapCar3 = {0, 205, 410, 890};
+
 
         createMenuBar();
 
@@ -120,8 +125,8 @@ public class Game extends JFrame implements KeyListener {
         backgroundmusic.setFile("AgelessRiverExcerpt.wav");
         backgroundmusic.loop();
 
-        for (int i = 0; i < 5; i++) {
-            al_right.add(new Car(GapCar1[i], 480, 80, 40, (int) (Math.random() * 6)));
+        for (int i = 0; i < 4; i++) {
+            al_right.add(new Car(GapCar3[i], 480, 80, 40, (int) (Math.random() * 6)));
             al_right.add(new Car(GapCar1[i], 240, 80, 40, (int) (Math.random() * 6)));
             al_left.add(new Car(GapCar1[i], 365, 80, 40, (int) (Math.random() * 6)));
             al_left.add(new Car(GapCar2[i], 120, 80, 40, (int) (Math.random() * 6)));
@@ -162,6 +167,9 @@ public class Game extends JFrame implements KeyListener {
                 if (motorcycles_added == false)
                     addMotorcycles();
                 motorcycles_added = true;
+                if (cars_added == false)
+                    addCars();
+                cars_added = true;
                 velo = 9;
                 score = 0;
                 round = 7;
@@ -176,6 +184,9 @@ public class Game extends JFrame implements KeyListener {
                 if (motorcycles_added == false)
                     addMotorcycles();
                 motorcycles_added = true;
+                if (cars_added == false)
+                    addCars();
+                cars_added = true;
                 velo = 12;
                 score = 0;
                 round = 9;
@@ -190,6 +201,9 @@ public class Game extends JFrame implements KeyListener {
                 if (motorcycles_added == false)
                     addMotorcycles();
                 motorcycles_added = true;
+                if (cars_added == false)
+                    addCars();
+                cars_added = true;
                 velo = 25;
                 score = 0;
                 round = 15;
@@ -273,6 +287,7 @@ public class Game extends JFrame implements KeyListener {
 
     @Override
     public void paint(Graphics g) {
+        //checking operating system (and set world positioning)
         if (getOsName().toLowerCase().contains("windows")) {
             g.drawImage(rendered, 0, 40, null);
         } else {
@@ -346,6 +361,7 @@ public class Game extends JFrame implements KeyListener {
         g.setColor(Color.decode("#8A9B0F"));
         //g.fillRect((int) r_frog.getX(), (int) r_frog.getY(), (int) r_frog.getWidth(), (int) r_frog.getHeight());
 
+        //changes look of frog by pressing keys
         switch (keySwitch) {
             case 0:
                 g.drawImage(frog, (int) r_frog.getX(), (int) r_frog.getY(), null);
@@ -368,6 +384,8 @@ public class Game extends JFrame implements KeyListener {
 
 
         g.setColor(Color.white);
+
+        //collision detection (cars - right)
         for (Car r2 : al_right) {
             //g.fillRect((int) r2.getX(), (int) r2.getY(), (int) r2.getWidth(), (int) r2.getHeight());
             g.drawImage(Cars[r2.texture], (int) r2.getX() + (int) r2.getWidth(), (int) r2.getY(), (int) -r2.getWidth(), (int) r2.getHeight(), null);
@@ -382,6 +400,7 @@ public class Game extends JFrame implements KeyListener {
             }
         }
 
+        //collision detection (cars - left)
         for (Car r3 : al_left) {
             //g.fillRect((int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight());
             g.drawImage(Cars[r3.texture], (int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight(), null);
@@ -437,6 +456,13 @@ public class Game extends JFrame implements KeyListener {
         al_right.add(new Car(400, 455, 50, 20, (int)(Math.random() * 2) + 8));
         al_left.add(new Car(240, 170, 50, 20, (int)(Math.random() * 2) + 8));
         al_left.add(new Car(800, 405, 50, 20, (int)(Math.random() * 2) + 8));
+        return;
+    }
+
+    public void addCars() {
+        al_right.add(new Car((int) al_right.get(2).getX()+320, 240, 80, 40, (int) (Math.random() * 6)));
+        al_left.add(new Car((int) al_left.get(2).getX()+120, 365, 80, 40, (int) (Math.random() * 6)));
+        al_right.add(new Car((int) al_right.get(2).getX()+420, 480, 80, 40, (int) (Math.random() * 6)));
         return;
     }
 
@@ -502,6 +528,9 @@ public class Game extends JFrame implements KeyListener {
                     score = score + 2;
                     break;
                 case 5:
+                    if (cars_added == false)
+                        addCars();
+                    cars_added = true;
                     score = score + 2;
                     velo = 8;
                     break;
