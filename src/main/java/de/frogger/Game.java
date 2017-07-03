@@ -386,6 +386,7 @@ public class Game extends JFrame implements KeyListener {
             g.drawImage(Cars[r3.texture], (int) r3.getX(), (int) r3.getY(), (int) r3.getWidth(), (int) r3.getHeight(), null);
             if (r3.intersects(r_frog) && runFlag) {
 
+                g.drawString("100",400,100);
                 gameOver();
             }
             r3.setLocation((int) r3.getX() - velo, (int) r3.getY());
@@ -443,15 +444,34 @@ public class Game extends JFrame implements KeyListener {
 
         getGraphics().drawImage(gameOverlay,0,0,800,645,null);
 
-        if (JOptionPane.showConfirmDialog(this, "Do you want to continue?", "Game Over",
-                JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-            round = -1;
-            score = -1;
-            velo = 4;
-            gameContinues();
-        } else {
-            System.exit(ABORT);
+        String highscore = Integer.toString(score);
+
+        if(score > 0){
+            if (JOptionPane.showConfirmDialog(this,
+                    "Highscore: " + highscore +
+                            "\nDo you want to continue?", "Game Over",
+                    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                round = -1;
+                score = -1;
+                velo = 4;
+                gameContinues();
+            } else {
+                System.exit(ABORT);
+            }
+        }else {
+            if (JOptionPane.showConfirmDialog(this,
+                            "Do you want to continue?", "Game Over",
+                    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                round = -1;
+                score = -1;
+                velo = 4;
+                gameContinues();
+            } else {
+                System.exit(ABORT);
+            }
         }
+
+
 
     }
 
