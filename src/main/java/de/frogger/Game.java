@@ -75,6 +75,8 @@ public class Game extends JFrame implements KeyListener {
     MenuItem option3 = new MenuItem("Very Hard");
     MenuItem option4 = new MenuItem("Nightmare");
     MenuItem option5 = new MenuItem("Overkill!");
+    MenuItem option6 = new MenuItem("Deathwish x_x");
+
     Menu points = new Menu("Score: " + score);
 
     BufferedImage rendered;
@@ -213,6 +215,23 @@ public class Game extends JFrame implements KeyListener {
             }
         });
 
+        option6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (motorcycles_added == false)
+                    addMotorcycles();
+                motorcycles_added = true;
+                if (cars_added == false)
+                    addCars();
+                cars_added = true;
+                velo = 100;
+                score = 0;
+                round = 100;
+                y_frog = 510;
+                x_frog = 380;
+                points.setLabel("Score: " + score);
+            }
+        });
+
         music1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 backgroundmusic.stopSound();
@@ -268,6 +287,7 @@ public class Game extends JFrame implements KeyListener {
         option.add(option3);
         option.add(option4);
         option.add(option5);
+        option.add(option6);
 
         mb.add(points);
     }
@@ -460,7 +480,7 @@ public class Game extends JFrame implements KeyListener {
     }
 
     public void addCars() {
-        al_right.add(new Car((int) al_right.get(2).getX()+320, 240, 80, 40, (int) (Math.random() * 6)));
+        al_right.add(new Car((int) al_right.get(2).getX()+420, 240, 80, 40, (int) (Math.random() * 6)));
         al_left.add(new Car((int) al_left.get(2).getX()+120, 365, 80, 40, (int) (Math.random() * 6)));
         al_right.add(new Car((int) al_right.get(2).getX()+420, 480, 80, 40, (int) (Math.random() * 6)));
         return;
