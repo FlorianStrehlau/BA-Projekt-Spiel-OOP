@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /*
@@ -32,6 +33,7 @@ public class Game extends JFrame implements KeyListener {
     private Image palm4;
     private Image palm5;
     private Image coast;
+    private Image gameOverlay;
     int x = 1;
     int y_frog = 560;
     int x_frog = 380;
@@ -104,6 +106,7 @@ public class Game extends JFrame implements KeyListener {
         palm4 = getImage("palm4.png");
         palm5 = getImage("palm5.png");
         coast = getImage("coast.png");
+        gameOverlay = getImage("gameOverlay.png");
         rendered = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 
         int[] GapCar1 = {0, 205, 510, 790, 990};
@@ -286,6 +289,10 @@ public class Game extends JFrame implements KeyListener {
          */
         g.drawImage(coast, 0, yCoast, null);
 
+        int[] coastRand = {15,16,17,18,19,20};
+        int coastY = (coastRand[new Random().nextInt(coastRand.length)]);
+
+
         long thisTime = System.currentTimeMillis();
 
         if ((thisTime - lastTime) >= PERIOD) {
@@ -299,7 +306,7 @@ public class Game extends JFrame implements KeyListener {
                     yCoast--;
                 }
             } else {
-                if (yCoast >= 20) {
+                if (yCoast >= coastY) {
                     downwards = true;
                     yCoast--;
                 } else {
@@ -424,10 +431,13 @@ public class Game extends JFrame implements KeyListener {
 
     public void gameOver() {
 
+        getGraphics().drawImage(gameOverlay,0,0,800,645,null);
+
         if (JOptionPane.showConfirmDialog(this, "Do you want to continue?", "Game Over",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             round = -1;
             score = -1;
+            velo = 4;
             gameContinues();
         } else {
             System.exit(ABORT);
