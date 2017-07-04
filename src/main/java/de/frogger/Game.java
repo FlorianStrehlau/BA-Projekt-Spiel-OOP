@@ -33,8 +33,6 @@ public class Game extends JFrame implements KeyListener {
     private Image palm4;
     private Image palm5;
     private Image palm6;
-    private Image palm7;
-    private Image palm8;
     private Image coast;
     private Image coast2;
     private Image gameOverlay;
@@ -61,7 +59,7 @@ public class Game extends JFrame implements KeyListener {
 
     //car images - left / right
     private Image Cars[] = new Image[20];
-    private Image Palms[] = new Image[8];
+    private Image Palms[] = new Image[6];
 
 
     boolean motorcycles_added = false;
@@ -113,7 +111,7 @@ public class Game extends JFrame implements KeyListener {
         frogR = getImage("Frog_r.png");
         frogL = getImage("Frog_l.png");
         frogD = getImage("Frog_d.png");
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 1; i <= 6; i++) {
             Palms[i - 1] = getImage("palm" + i + ".png");
         }
         coast = getImage("coast.png");
@@ -382,36 +380,36 @@ public class Game extends JFrame implements KeyListener {
 
         if (nightTime) {
             // Palm trees south
-            g.drawImage(Palms[6], 100, 530, null);
-            g.drawImage(Palms[6], 470, 541, null);
-            g.drawImage(Palms[5], 250, 550, null);
-            g.drawImage(Palms[7], 50, 536, null);
-            g.drawImage(Palms[6], 600, 543, null);
-            g.drawImage(Palms[5], 680, 530, null);
+            g.drawImage(Palms[3], 100, 530, null);
+            g.drawImage(Palms[3], 470, 541, null);
+            g.drawImage(Palms[4], 250, 550, null);
+            g.drawImage(Palms[5], 50, 536, null);
+            g.drawImage(Palms[3], 600, 543, null);
+            g.drawImage(Palms[4], 680, 530, null);
 
             // Palm trees north
-            g.drawImage(Palms[7], 80, 42, null);
-            g.drawImage(Palms[5], 400, 37, null);
-            g.drawImage(Palms[6], 190, 35, null);
-            g.drawImage(Palms[5], 25, 41, null);
-            g.drawImage(Palms[6], 604, 50, null);
-            g.drawImage(Palms[6], 670, 55, null);
+            g.drawImage(Palms[5], 80, 42, null);
+            g.drawImage(Palms[3], 400, 37, null);
+            g.drawImage(Palms[4], 190, 35, null);
+            g.drawImage(Palms[3], 25, 41, null);
+            g.drawImage(Palms[4], 604, 50, null);
+            g.drawImage(Palms[4], 670, 55, null);
         } else {
             // Palm trees south
             g.drawImage(Palms[0], 100, 530, null);
             g.drawImage(Palms[0], 470, 541, null);
-            g.drawImage(Palms[3], 250, 550, null);
+            g.drawImage(Palms[0], 250, 550, null);
             g.drawImage(Palms[1], 50, 536, null);
-            g.drawImage(Palms[2], 600, 543, null);
-            g.drawImage(Palms[4], 680, 530, null);
+            g.drawImage(Palms[1], 600, 543, null);
+            g.drawImage(Palms[2], 680, 530, null);
 
             // Palm trees north
-            g.drawImage(Palms[1], 80, 42, null);
-            g.drawImage(Palms[4], 400, 37, null);
+            g.drawImage(Palms[0], 80, 42, null);
+            g.drawImage(Palms[2], 400, 37, null);
             g.drawImage(Palms[0], 190, 35, null);
-            g.drawImage(Palms[3], 25, 41, null);
+            g.drawImage(Palms[1], 25, 41, null);
             g.drawImage(Palms[1], 604, 50, null);
-            g.drawImage(Palms[2], 670, 55, null);
+            g.drawImage(Palms[0], 670, 55, null);
 
         }
 
