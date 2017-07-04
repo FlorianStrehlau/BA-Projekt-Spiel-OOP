@@ -1,5 +1,5 @@
 group 'Studium'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 apply plugin: 'java'
 
@@ -22,7 +22,7 @@ task run(type: JavaExec) {
 jar {
     outputs.upToDateWhen { false }
     println "Deleting old build..."
-    delete 'frogger_build'
+    delete 'FrogBeachRun'
 
     println "Building..."
 
@@ -38,11 +38,11 @@ jar {
         println "Copying..."
         copy {
             from 'src/main/resources'
-            into 'frogger_build'
+            into 'FrogBeachRun'
         }
         copy {
             from 'build/libs'
-            into 'frogger_build'
+            into 'FrogBeachRun'
         }
         println "Build ready!"
     }
