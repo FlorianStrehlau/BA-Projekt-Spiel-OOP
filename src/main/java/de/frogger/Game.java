@@ -53,6 +53,7 @@ public class Game extends JFrame implements KeyListener {
     int keySwitch = 0;
     int highscore = 0;
 
+
     ArrayList<Car> al_right = new ArrayList<>();
     ArrayList<Car> al_left = new ArrayList<>();
 
@@ -98,6 +99,7 @@ public class Game extends JFrame implements KeyListener {
         this.addKeyListener(this);
         this.setFocusable(true);
         this.setVisible(true);
+        this.setResizable(false);
         this.requestFocus();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
