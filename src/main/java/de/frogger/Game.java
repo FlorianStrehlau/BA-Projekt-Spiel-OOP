@@ -121,10 +121,10 @@ public class Game extends JFrame implements KeyListener {
         gameOverlay = getImage("gameOverlay.png");
         rendered = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
 
-        int[] GapCar1 = {0, 205, 510, 990};
+        int[] GapCar1 = {0, 205, 410, 590, 890};
         int[] GapCar2 = {0, 800, 510, 660};
-        int[] GapCar3 = {0, 205, 410, 890};
-
+        int[] GapCar3 = {0, 205, 410, 600, 890};
+        int[] GapCar4 = {0, 125, 240, 600, 810};
 
         createMenuBar();
 
@@ -135,11 +135,16 @@ public class Game extends JFrame implements KeyListener {
 
         for (int i = 0; i < 4; i++) {
             al_right.add(new Car(GapCar3[i], 480, 80, 40, (int) (Math.random() * 6)));
-            al_right.add(new Car(GapCar1[i], 240, 80, 40, (int) (Math.random() * 6)));
             al_left.add(new Car(GapCar1[i], 365, 80, 40, (int) (Math.random() * 6)));
+            al_right.add(new Car(GapCar4[i], 240, 80, 40, (int) (Math.random() * 6)));
             al_left.add(new Car(GapCar2[i], 120, 80, 40, (int) (Math.random() * 6)));
         }
         al_left.add(new Car(230, 120, 180, 50, (int) (Math.random() * 2) + 6));
+
+        al_right.add(new Car(GapCar3[4], 480, 80, 40, (int) (Math.random() * 6)));
+        al_left.add(new Car(GapCar1[4], 365, 80, 40, (int) (Math.random() * 6)));
+        al_right.add(new Car(GapCar4[4], 240, 80, 40, (int) (Math.random() * 6)));
+
 
         /*
          * Actionlistener anonymous class
@@ -175,9 +180,6 @@ public class Game extends JFrame implements KeyListener {
                 if (motorcycles_added == false)
                     addMotorcycles();
                 motorcycles_added = true;
-                if (cars_added == false)
-                    addCars();
-                cars_added = true;
                 velo = 9;
                 score = 0;
                 round = 7;
@@ -192,9 +194,6 @@ public class Game extends JFrame implements KeyListener {
                 if (motorcycles_added == false)
                     addMotorcycles();
                 motorcycles_added = true;
-                if (cars_added == false)
-                    addCars();
-                cars_added = true;
                 velo = 12;
                 score = 0;
                 round = 9;
@@ -209,9 +208,6 @@ public class Game extends JFrame implements KeyListener {
                 if (motorcycles_added == false)
                     addMotorcycles();
                 motorcycles_added = true;
-                if (cars_added == false)
-                    addCars();
-                cars_added = true;
                 velo = 25;
                 score = 0;
                 round = 15;
@@ -226,9 +222,6 @@ public class Game extends JFrame implements KeyListener {
                 if (motorcycles_added == false)
                     addMotorcycles();
                 motorcycles_added = true;
-                if (cars_added == false)
-                    addCars();
-                cars_added = true;
                 velo = 100;
                 score = 0;
                 round = 100;
@@ -525,13 +518,6 @@ public class Game extends JFrame implements KeyListener {
         return;
     }
 
-    public void addCars() {
-        al_right.add(new Car((int) al_right.get(2).getX() + 420, 240, 80, 40, (int) (Math.random() * 6)));
-        al_left.add(new Car((int) al_left.get(2).getX() + 120, 365, 80, 40, (int) (Math.random() * 6)));
-        al_right.add(new Car((int) al_right.get(2).getX() + 420, 480, 80, 40, (int) (Math.random() * 6)));
-        return;
-    }
-
 
     public void gameOver() {
 
@@ -596,9 +582,6 @@ public class Game extends JFrame implements KeyListener {
                     score = score + 2;
                     break;
                 case 5:
-                    if (cars_added == false)
-                        addCars();
-                    cars_added = true;
                     score = score + 2;
                     velo = 8;
                     break;
